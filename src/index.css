@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #0ea5e9;
+  --secondary: #8b5cf6;
+  --accent: #f43f5e;
+  --light: #f8fafc;
+  --text: #0f172a;
+  --border: rgba(0, 0, 0, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--light);
+  color: var(--text);
+  overflow-x: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/70 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] backdrop-blur-md border border-white/20;
+  }
+  
+  .neon-border {
+    @apply relative overflow-hidden;
+  }
+  
+  .neon-border::before {
+    content: '';
+    @apply absolute -inset-[2px] bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)] opacity-50 blur-sm -z-10 transition-opacity duration-500;
+  }
+  
+  .neon-border:hover::before {
+    @apply opacity-100 blur-md;
+  }
+
+  .mesh-grid {
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Hero Section Orbit Styles */
+  .hero-ring-container {
+    perspective: 1000px;
+    transform: rotateX(15deg);
+  }
+
+  .hero-ring-path {
+    width: 900px;
+    height: 450px;
+    margin-top: -450px;
+  }
+
+  .hero-light-trail {
+    width: 990px;
+    height: 495px;
+    margin-top: -495px;
+    background: conic-gradient(from 180deg, transparent 0%, rgba(14,165,233,0.05) 25%, rgba(14,165,233,0.1) 50%, rgba(14,165,233,0.05) 75%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+  }
+
+  .hero-grid-overlay {
+    background-image: linear-gradient(rgba(15,23,42,1) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(15,23,42,1) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  
+  .showcase-scan-line {
+    @apply absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent z-30 pointer-events-none;
+    box-shadow: 0 0 30px 10px rgba(14,165,233,0.15);
+  }
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
+}
+
+.glow-primary {
+  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.15);
+}
+
+.glow-secondary {
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+  border: 3px solid var(--light);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
