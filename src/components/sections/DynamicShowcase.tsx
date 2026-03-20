@@ -54,6 +54,8 @@ const DashboardFragment = ({
             rotate: 0,
             scale: 1,
             opacity: 1,
+            width: assembled.width,
+            height: assembled.height,
           }
         : {
             x: scrambled.x,
@@ -61,6 +63,8 @@ const DashboardFragment = ({
             rotate: scrambled.rotate,
             scale: scrambled.scale,
             opacity: 0.6,
+            width: assembled.width,
+            height: assembled.height,
           }
     }
     transition={{
@@ -68,8 +72,7 @@ const DashboardFragment = ({
       delay: isAssembled ? delay : 0,
       ease: [0.16, 1, 0.3, 1],
     }}
-    style={{ '--w': `${assembled.width}px`, '--h': `${assembled.height}px` } as React.CSSProperties}
-    className="absolute [width:var(--w)] [height:var(--h)]"
+    className="absolute"
   >
     {children}
   </motion.div>
@@ -395,18 +398,20 @@ const DynamicShowcase = () => {
         {/* ═══════════════════════════════════════════ */}
         {/* ──  SCRAMBLE → ASSEMBLE DASHBOARD AREA  ── */}
         {/* ═══════════════════════════════════════════ */}
-        <div
+        <motion.div
           ref={containerRef}
           className="relative w-full max-w-[880px] mx-auto mt-16 md:mt-32"
-          style={{ height: `${CANVAS_H * scale}px` }}
+          animate={{ height: CANVAS_H * scale }}
+          transition={{ duration: 0 }}
         >
-        <div
+        <motion.div
           className="rounded-[20px] md:rounded-[40px] bg-slate-900/30 border border-white/5 shadow-2xl overflow-hidden relative origin-top-left"
-          style={{
-            width: `${CANVAS_W}px`,
-            height: `${CANVAS_H}px`,
-            transform: `scale(${scale})`,
-          } as React.CSSProperties}
+          animate={{
+            width: CANVAS_W,
+            height: CANVAS_H,
+            scale: scale,
+          }}
+          transition={{ duration: 0 }}
         >
           {/* Background grid */}
           <div className="absolute inset-0 opacity-[0.03] mesh-grid" />
@@ -498,8 +503,8 @@ const DynamicShowcase = () => {
               </motion.button>
             )}
           </AnimatePresence>
-        </div>
-        </div>
+        </motion.div>
+        </motion.div>
       </div>
     </section>
   );
