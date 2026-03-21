@@ -4,8 +4,14 @@ import { Calendar, MapPin, Clock, AlertTriangle, Code } from 'lucide-react';
 import { SectionTitle, containerVariants, itemVariants } from './shared';
 
 const Details = () => (
-  <section id="details" className="py-24 px-6 max-w-7xl mx-auto space-y-24">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+  <section id="details" className="py-24 px-6 max-w-7xl mx-auto space-y-20 relative overflow-hidden">
+    {/* Decorative background element */}
+    <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-[0.03]">
+      <Code className="w-96 h-96 -mr-20 -mt-20 text-sky-900" />
+    </div>
+
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+      {/* Leadership Section */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -13,32 +19,42 @@ const Details = () => (
         variants={containerVariants}
         className="space-y-12"
       >
-        <SectionTitle subtitle="The Panel" title="Event Co-ordinators" centered={false} />
+        <div className="flex flex-col gap-2">
+          <SectionTitle subtitle="Visionary Panel" title="Event Leadership" centered={false} />
+          <div className="h-1 bg-sky-500 w-16 rounded-full" />
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {[
-            { name: 'VIDHARSHANA SHREE R', dept: 'II CSE B', image: '/vidharshana_profile.jpg', objectPosition: 'object-center' },
-            { name: 'MUTHUSELVAN SP', dept: 'II CSE B', image: '/muthuselvan_profile.jpg', objectPosition: 'object-center' }
+            { name: 'VIDHARSHANA SHREE R', dept: 'II CSE B', image: '/vidharshana_profile.jpg' },
+            { name: 'MUTHUSELVAN SP', dept: 'II CSE B', image: '/muthuselvan_profile.jpg' }
           ].map((item, i) => (
             <motion.div 
               key={i} 
               variants={itemVariants}
-              whileHover={{ scale: 1.02, y: -5 }}
-              className="flex flex-col items-center gap-6 p-8 glass rounded-[2.5rem] border border-sky-50 shadow-sm hover:bg-white hover:shadow-xl transition-all text-center"
+              whileHover={{ y: -8 }}
+              className="relative group pt-10"
             >
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-[2rem] overflow-hidden border-4 border-white shadow-2xl flex-shrink-0">
-                <img src={item.image} alt={item.name} className={`w-full h-full object-cover ${item.objectPosition}`} loading="lazy" />
-              </div>
-              <div>
-                <h4 className="font-black text-slate-900 text-xl mb-0.5">{item.name}</h4>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">{item.dept}</p>
-                <p className="text-xs text-sky-600 font-black uppercase tracking-[0.2em]">Co-ordinator</p>
+              {/* Refined Cable Visual */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-4 border-slate-100 bg-white shadow-sm z-10" />
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-0.5 h-6 bg-slate-100" />
+
+              <div className="h-full flex flex-col items-center gap-6 p-8 glass rounded-[2.5rem] border border-white/60 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] transition-all duration-500 text-center">
+                <div className="w-28 h-28 rounded-3xl overflow-hidden border-4 border-white shadow-xl flex-shrink-0 relative group-hover:scale-105 transition-transform duration-500">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div>
+                  <h4 className="font-black text-slate-900 text-lg mb-1 tracking-tight leading-tight">{item.name}</h4>
+                  <p className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em] mb-4">{item.dept}</p>
+                  <p className="text-[9px] text-sky-600 font-black uppercase tracking-[0.2em] py-1.5 px-4 bg-sky-50/50 rounded-full inline-block border border-sky-100">Co-ordinator</p>
+                </div>
               </div>
             </motion.div>
           ))}
-
         </div>
       </motion.div>
       
+      {/* Schedule Section */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -46,21 +62,30 @@ const Details = () => (
         variants={containerVariants}
         className="space-y-12"
       >
-        <SectionTitle subtitle="Logistics" title="Event Details" centered={false} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div className="flex flex-col gap-2">
+          <SectionTitle subtitle="Protocol" title="Event Schedule" centered={false} />
+          <div className="h-1 bg-indigo-500 w-16 rounded-full" />
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-2">
           {[
-            { label: 'Date', value: '27 March', icon: <Calendar /> },
-            { label: 'Venue', value: 'CC1 & CC2', icon: <MapPin /> },
-            { label: 'Time', value: '9:00 AM - 12:30 PM', icon: <Clock /> },
-            { label: 'Deadline', value: '27 March, 8:30 AM', icon: <AlertTriangle /> }
+            { label: 'Date', value: '27 March', icon: Calendar, color: 'text-indigo-500', bg: 'bg-indigo-50/50' },
+            { label: 'Venue', value: 'CC1 & CC2', icon: MapPin, color: 'text-emerald-500', bg: 'bg-emerald-50/50' },
+            { label: 'Time', value: '09:00 - 12:30', icon: Clock, color: 'text-sky-500', bg: 'bg-sky-50/50' },
+            { label: 'Deadline', value: '27 March, 8:30', icon: AlertTriangle, color: 'text-rose-500', bg: 'bg-rose-50/50' }
           ].map((item, i) => (
-            <motion.div key={i} variants={itemVariants} className="space-y-3 group">
-              <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-all duration-300">
-                {item.icon}
+            <motion.div 
+              key={i} 
+              variants={itemVariants} 
+              whileHover={{ y: -8 }}
+              className="flex flex-col p-6 glass rounded-3xl border border-white/60 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] transition-all duration-500 gap-4 h-full"
+            >
+              <div className={`w-10 h-10 rounded-xl ${item.bg} flex items-center justify-center ${item.color} border border-white shadow-sm`}>
+                <item.icon size={18} />
               </div>
-              <div>
-                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest">{item.label}</h4>
-                <p className="text-xl font-black text-slate-800 tracking-tight group-hover:text-sky-600 transition-colors">{item.value}</p>
+              <div className="space-y-1">
+                <h4 className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">{item.label}</h4>
+                <p className="text-lg font-black text-slate-800 tracking-tight leading-tight">{item.value}</p>
               </div>
             </motion.div>
           ))}
@@ -68,56 +93,50 @@ const Details = () => (
       </motion.div>
     </div>
 
+    {/* Engineering Lead Spotlight */}
     <motion.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
       variants={containerVariants}
-      className="space-y-12"
+      className="space-y-10"
     >
-      <SectionTitle subtitle="Technical Team" title="Web Developers" centered={false} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          { name: 'SALABADESHWARAN', dept: 'II CSE B', role: 'Lead Developer' },
-          { name: 'MITHRAN', dept: 'II CSE B', role: 'Frontend Developer' },
-          { name: 'SANJAY', dept: 'II CSE B', role: 'Backend Developer' },
-          { name: 'RAJARAJAN', dept: 'II CSE B', role: 'UI/UX Designer' }
-        ].map((item, i) => (
-          <motion.div 
-            key={i} 
-            variants={itemVariants}
-            whileHover={{ scale: 1.05, y: -10 }}
-            className="flex flex-col items-center gap-6 p-8 glass rounded-[2.5rem] border-2 border-sky-500 shadow-xl shadow-sky-100/50 hover:bg-white hover:shadow-2xl transition-all text-center"
-          >
-            <div>
-              <h4 className="font-black text-slate-900 text-xl mb-1">{item.name}</h4>
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-3">{item.dept}</p>
-              <span className="px-4 py-1 rounded-full bg-sky-600 text-white text-[10px] font-black uppercase tracking-[0.2em]">
-                {item.role}
-              </span>
-            </div>
-          </motion.div>
-        ))}
+      <div className="flex items-center justify-between">
+        <SectionTitle subtitle="Architecture" title="Engineering Lead" centered={false} />
       </div>
+      
+      <motion.div 
+        variants={itemVariants}
+        whileHover={{ y: -5 }}
+        className="p-1 glass rounded-[3.5rem] border border-sky-400/30 shadow-[0_40px_100px_-20px_rgba(14,165,233,0.15)] overflow-hidden group"
+      >
+        <div className="bg-white/40 backdrop-blur-3xl rounded-[3.25rem] p-10 flex flex-col md:flex-row items-center gap-10 md:gap-14 border border-white/80">
+          <div className="w-56 h-56 rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl relative rotate-3 group-hover:rotate-0 transition-transform duration-700">
+            <img src="/team/salabadeshwaran.jpg" alt="Salabadeshwaran" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          </div>
+          
+          <div className="flex-1 text-center md:text-left">
+            <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
+              <span className="px-5 py-1.5 rounded-full bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.3em] shadow-lg">Lead Developer</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            </div>
+            
+            <h4 className="text-4xl md:text-5xl font-black text-slate-900 mb-2 tracking-tighter uppercase italic">SALABADESHWARAN S</h4>
+            <p className="text-sm text-slate-500 font-bold uppercase tracking-[0.5em] mb-1">II CSE B • DESIGN XPO • VIBECODER</p>
+            <p className="text-[10px] text-sky-600 font-extrabold uppercase tracking-widest mb-6">SHREE SAKTHI ENGINEERING COLLEGE - KARAMADAI</p>
+            
+            <p className="text-slate-600 text-sm font-medium leading-relaxed max-w-2xl mb-8 mx-auto md:mx-0">
+              Responsible for the technical architecture and seamless delivery of DesignXpo 1.0. 
+              Passionate about building performant web platforms that push the boundaries of 
+              modern UI/UX design.
+            </p>
+            
+          </div>
+        </div>
+      </motion.div>
     </motion.div>
 
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="flex flex-col items-center justify-center pt-12 text-center"
-    >
-      <motion.a
-        href="#register"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="group relative px-12 py-6 rounded-2xl bg-slate-900 text-white font-black uppercase tracking-[0.3em] text-sm overflow-hidden transition-all shadow-2xl hover:shadow-sky-500/20"
-      >
-        <span className="relative z-10">Register Now</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      </motion.a>
-      <p className="mt-6 text-slate-400 font-bold uppercase tracking-widest text-[10px]">Limited Slots Available</p>
-    </motion.div>
   </section>
 );
 

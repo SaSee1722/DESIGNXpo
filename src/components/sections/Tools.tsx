@@ -31,17 +31,17 @@ const Tools = () => (
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-2xl font-black text-slate-900">Allowed Assistants</h3>
-              <p className="text-slate-500 text-sm">For code suggestions only</p>
+              <h3 className="text-2xl font-black text-slate-900">Allowed Tools</h3>
+              <p className="text-slate-500 text-sm">Approved editors and assistants</p>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-            {['ChatGPT', 'Gemini', 'Claude', 'Grok', 'DeepSeek'].map(item => (
+            {['VS Code', 'ChatGPT', 'Gemini', 'Claude', 'Grok', 'DeepSeek'].map(item => (
               <ToolCard key={item} name={item} type="allowed" />
             ))}
           </div>
           <p className="mt-8 text-sm text-slate-500 italic p-4 bg-slate-50 rounded-xl border border-slate-100 italic relative z-10">
-            Note: Use of AI for code suggestions and design inspiration is allowed.
+            Note: Standard editors and AI for code suggestions are allowed.
           </p>
         </motion.div>
 
@@ -60,7 +60,7 @@ const Tools = () => (
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-            {['Cursor', 'Antigravity', 'Trae'].map(item => (
+            {['Cursor', 'Antigravity', 'Trae', 'Lovable', 'Bolt', 'Onspace'].map(item => (
               <ToolCard key={item} name={item} type="restricted" />
             ))}
           </div>

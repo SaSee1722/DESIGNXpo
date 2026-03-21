@@ -1,36 +1,23 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Shield, 
-  Layers,
   TrendingUp,
   Users,
   BarChart3,
-  Activity,
-  Bell,
-  Search,
-  Settings,
-  ChevronRight,
-  ArrowUpRight,
-  Clock,
-  CheckCircle2,
-  Circle,
-  MoreHorizontal,
-  Home,
-  FolderOpen,
-  Star,
   MessageSquare,
+  Rocket,
+  ChevronRight,
+  MoreHorizontal,
+  Layout,
+  Calendar,
+  Zap,
+  DollarSign,
+  Plus
 } from 'lucide-react';
-
 
 /* ══════════════════════════════════════════════════════ */
 /* ── SCRAMBLED DASHBOARD PIECES                     ── */
 /* ══════════════════════════════════════════════════════ */
-
-/* Each dashboard fragment has:
-   - scrambled: absolute position + rotation when scattered
-   - assembled: grid position when assembled into dashboard
-*/
 
 const DashboardFragment = ({
   children,
@@ -43,7 +30,7 @@ const DashboardFragment = ({
   scrambled: { x: number; y: number; rotate: number; scale: number };
   assembled: { x: number; y: number; width: string; height: string };
   isAssembled: boolean;
-  delay: number;
+  delay?: number;
 }) => (
   <motion.div
     animate={
@@ -56,233 +43,231 @@ const DashboardFragment = ({
             opacity: 1,
             width: assembled.width,
             height: assembled.height,
+            zIndex: 10,
           }
         : {
             x: scrambled.x,
             y: scrambled.y,
             rotate: scrambled.rotate,
             scale: scrambled.scale,
-            opacity: 0.6,
+            opacity: 0.4,
             width: assembled.width,
             height: assembled.height,
+            zIndex: 0,
           }
     }
     transition={{
-      duration: 1.2,
-      delay: isAssembled ? delay : 0,
+      duration: 1.5,
+      delay: isAssembled ? (delay ?? 0) : 0,
       ease: [0.16, 1, 0.3, 1],
     }}
-    className="absolute"
+    className="absolute pointer-events-auto"
   >
     {children}
   </motion.div>
 );
 
-/* ── Mini dashboard UI pieces ── */
-const SidebarFragment = () => (
-  <div className="w-full h-full rounded-xl bg-slate-800/80 border border-white/10 p-3 flex flex-col gap-3 overflow-hidden backdrop-blur-sm">
-    {/* Logo */}
-    <div className="flex items-center gap-2 mb-2">
-      <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-sky-400 to-cyan-500 flex items-center justify-center">
-        <Layers size={12} className="text-white" />
-      </div>
-      <span className="text-[10px] font-bold text-white tracking-wider">DX PANEL</span>
-    </div>
-    {/* Menu items */}
-    {[
-      { icon: Home, label: 'Dashboard', active: true },
-      { icon: BarChart3, label: 'Analytics', active: false },
-      { icon: FolderOpen, label: 'Projects', active: false },
-      { icon: Users, label: 'Team', active: false },
-      { icon: Star, label: 'Starred', active: false },
-      { icon: Settings, label: 'Settings', active: false },
-    ].map((item) => (
-      <div
-        key={item.label}
-        className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[9px] font-semibold ${
-          item.active
-            ? 'bg-sky-500/20 text-sky-400 border border-sky-500/20'
-            : 'text-slate-500 hover:text-slate-300'
-        }`}
-      >
-        <item.icon size={12} />
-        <span>{item.label}</span>
-      </div>
-    ))}
-  </div>
-);
+/* ── UI PIECES ── */
 
-const HeaderFragment = () => (
-  <div className="w-full h-full rounded-xl bg-slate-800/80 border border-white/10 px-4 flex items-center justify-between backdrop-blur-sm">
-    <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-700/50 border border-white/5">
-        <Search size={12} className="text-slate-400" />
-        <span className="text-[9px] text-slate-500">Search modules...</span>
-      </div>
-    </div>
-    <div className="flex items-center gap-3">
-      <div className="relative">
-        <Bell size={14} className="text-slate-400" />
-        <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-sky-500" />
-      </div>
-      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-400 to-indigo-500" />
-    </div>
-  </div>
-);
-
-const StatsCard = ({ icon: Icon, label, value, change, color }: any) => (
-  <div className="w-full h-full rounded-xl bg-slate-800/80 border border-white/10 p-3 flex flex-col justify-between backdrop-blur-sm">
+const BrainstormingCard = () => (
+  <div className="w-full h-full rounded-[2.5rem] bg-white p-7 shadow-2xl shadow-indigo-500/10 flex flex-col gap-3 border border-slate-100">
     <div className="flex items-center justify-between">
-      <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${color}`}>
-        <Icon size={14} className="text-white" />
+      <div className="flex items-center gap-3">
+        <span className="px-3 py-1 bg-rose-50 text-rose-500 text-[9px] font-black uppercase tracking-widest rounded-full">Low</span>
+        <h4 className="font-black text-slate-800 text-base tracking-tight">Brainstorming</h4>
       </div>
-      <span className="text-[9px] font-bold text-emerald-400 flex items-center gap-0.5">
-        <ArrowUpRight size={10} />
-        {change}
-      </span>
+      <MoreHorizontal size={18} className="text-slate-300" />
     </div>
-    <div className="mt-2">
-      <p className="text-lg font-black text-white tabular-nums">{value}</p>
-      <p className="text-[8px] font-semibold uppercase tracking-[0.2em] text-slate-500">{label}</p>
-    </div>
-  </div>
-);
-
-const ChartFragment = () => (
-  <div className="w-full h-full rounded-xl bg-slate-800/80 border border-white/10 p-3 flex flex-col backdrop-blur-sm">
-    <div className="flex items-center justify-between mb-3">
-      <span className="text-[10px] font-bold text-white">Performance Overview</span>
-      <div className="flex items-center gap-1">
-        <span className="text-[8px] text-sky-400 font-semibold">Live</span>
-        <div className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+    <p className="text-[10px] font-medium text-slate-400 leading-relaxed">
+      Brainstorming is a group problem-solving technique that involves the spontaneous contribution of ideas from all members of the group...
+    </p>
+    <div className="flex items-center justify-between mt-auto">
+      <div className="flex -space-x-2">
+        {[1,2,3].map(i => (
+          <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-100 overflow-hidden">
+             <img src={`https://i.pravatar.cc/100?u=${i+10}`} alt={`Member ${i}`} className="w-full h-full object-cover" />
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center gap-4 text-[9px] font-bold text-slate-300">
+        <span className="flex items-center gap-1"><MessageSquare size={12} /> 12 Comments</span>
+        <span className="flex items-center gap-1"><Layout size={12} /> 0 Files</span>
       </div>
     </div>
-    {/* Fake chart bars */}
-    <div className="flex-1 flex items-end gap-1.5 px-1">
-      {[40, 65, 45, 80, 55, 90, 70, 85, 60, 75, 95, 50, 70, 88, 65, 78].map((h, i) => (
-        <div key={i} className="flex-1 flex flex-col items-center justify-end gap-0.5">
-          <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: `${h}%` }}
-            transition={{ duration: 1, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-            className={`w-full rounded-sm ${i === 11 || i === 15 ? 'bg-sky-500' : 'bg-sky-500/30'}`}
-          />
-        </div>
-      ))}
-    </div>
-    <div className="flex items-center justify-between mt-2 px-1">
-      <span className="text-[7px] text-slate-600">Jan</span>
-      <span className="text-[7px] text-slate-600">Mar</span>
-      <span className="text-[7px] text-slate-600">Jun</span>
-      <span className="text-[7px] text-slate-600">Sep</span>
-      <span className="text-[7px] text-slate-600">Dec</span>
-    </div>
   </div>
 );
 
-const ActivityFragment = () => (
-  <div className="w-full h-full rounded-xl bg-slate-800/80 border border-white/10 p-3 flex flex-col backdrop-blur-sm overflow-hidden">
-    <div className="flex items-center justify-between mb-3">
-      <span className="text-[10px] font-bold text-white">Recent Activity</span>
-      <MoreHorizontal size={12} className="text-slate-500" />
-    </div>
-    <div className="flex flex-col gap-2 flex-1 overflow-hidden">
-      {[
-        { icon: CheckCircle2, text: 'Build deployed successfully', time: '2m ago', color: 'text-emerald-400' },
-        { icon: MessageSquare, text: 'New review comment', time: '5m ago', color: 'text-sky-400' },
-        { icon: Users, text: '3 team members joined', time: '12m ago', color: 'text-indigo-400' },
-        { icon: Activity, text: 'Performance spike detected', time: '18m ago', color: 'text-amber-400' },
-        { icon: Star, text: 'Project starred by admin', time: '25m ago', color: 'text-yellow-400' },
-      ].map((item, i) => (
-        <div key={i} className="flex items-center gap-2 py-1 border-b border-white/5 last:border-0">
-          <item.icon size={10} className={item.color} />
-          <span className="text-[8px] text-slate-300 flex-1 truncate">{item.text}</span>
-          <span className="text-[7px] text-slate-600 whitespace-nowrap">{item.time}</span>
+const ProjectDeliveriesCard = () => (
+  <div className="w-full h-full rounded-[2.5rem] bg-white p-6 shadow-2xl shadow-indigo-500/10 flex flex-col border border-slate-100">
+    <div className="flex items-center justify-between mb-4">
+      <h4 className="font-black text-slate-800 text-base tracking-tight">Deliveries</h4>
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-indigo-600 shadow-sm" />
+          <span className="text-[10px] font-black text-slate-900">8</span>
         </div>
-      ))}
-    </div>
-  </div>
-);
-
-const ProgressFragment = () => (
-  <div className="w-full h-full rounded-xl bg-slate-800/80 border border-white/10 p-3 flex flex-col backdrop-blur-sm">
-    <div className="flex items-center justify-between mb-3">
-      <span className="text-[10px] font-bold text-white">Sprint Progress</span>
-      <span className="text-[8px] font-bold text-sky-400">78%</span>
-    </div>
-    <div className="flex flex-col gap-2.5 flex-1">
-      {[
-        { label: 'UI Components', progress: 92, color: 'bg-emerald-500' },
-        { label: 'API Integration', progress: 78, color: 'bg-sky-500' },
-        { label: 'Testing', progress: 55, color: 'bg-amber-500' },
-        { label: 'Documentation', progress: 40, color: 'bg-indigo-500' },
-      ].map((item) => (
-        <div key={item.label} className="flex flex-col gap-1">
-          <div className="flex items-center justify-between">
-            <span className="text-[8px] text-slate-400">{item.label}</span>
-            <span className="text-[7px] text-slate-500 tabular-nums">{item.progress}%</span>
-          </div>
-          <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${item.progress}%` }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className={`h-full rounded-full ${item.color}`}
-            />
-          </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+          <span className="text-[10px] font-black text-slate-400">2</span>
         </div>
-      ))}
+      </div>
     </div>
-  </div>
-);
-
-const MiniDonutFragment = () => (
-  <div className="w-full h-full rounded-xl bg-slate-800/80 border border-white/10 p-3 flex flex-col items-center justify-center backdrop-blur-sm">
-    <div className="relative w-16 h-16">
-      <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-        <circle cx="18" cy="18" r="14" fill="none" stroke="#1e293b" strokeWidth="3" />
-        <motion.circle
-          cx="18" cy="18" r="14" fill="none" stroke="#0ea5e9" strokeWidth="3"
-          strokeDasharray="88" strokeDashoffset="22"
+    <div className="relative flex-1">
+      <svg viewBox="0 0 400 80" className="w-full h-full">
+        <motion.path
+          d="M 0 60 Q 50 10, 100 50 T 200 30 T 300 60 T 400 20"
+          fill="none"
+          stroke="#6366f1"
+          strokeWidth="3"
           strokeLinecap="round"
-          initial={{ strokeDashoffset: 88 }}
-          animate={{ strokeDashoffset: 22 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        />
-        <motion.circle
-          cx="18" cy="18" r="14" fill="none" stroke="#8b5cf6" strokeWidth="3"
-          strokeDasharray="88" strokeDashoffset="66"
-          strokeLinecap="round"
-          initial={{ strokeDashoffset: 88 }}
-          animate={{ strokeDashoffset: 66 }}
-          transition={{ duration: 1.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
         />
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-[10px] font-black text-white">75%</span>
-      </div>
     </div>
-    <span className="text-[8px] font-semibold text-slate-500 mt-2 uppercase tracking-wider">Uptime</span>
   </div>
 );
 
-/* ══════════════════════════════════════════ */
-/* ── MAIN COMPONENT                      ── */
-/* ══════════════════════════════════════════ */
+const StatisticsConcentricCard = () => (
+  <div className="w-full h-full rounded-[2.5rem] bg-white p-6 shadow-2xl shadow-indigo-500/10 flex flex-col items-center justify-center border border-slate-100">
+    <div className="relative w-32 h-32">
+      <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#f8fafc" strokeWidth="8" />
+        <motion.circle cx="50" cy="50" r="40" fill="none" stroke="#6366f1" strokeWidth="8" strokeDasharray="251.2" initial={{ strokeDashoffset: 251.2 }} animate={{ strokeDashoffset: 251.2 * (1 - 0.75) }} strokeLinecap="round" transition={{ duration: 2, ease: "circOut" }} />
+        
+        <circle cx="50" cy="50" r="30" fill="none" stroke="#f8fafc" strokeWidth="8" />
+        <motion.circle cx="50" cy="50" r="30" fill="none" stroke="#f43f5e" strokeWidth="8" strokeDasharray="188.4" initial={{ strokeDashoffset: 188.4 }} animate={{ strokeDashoffset: 188.4 * (1 - 0.55) }} strokeLinecap="round" transition={{ duration: 2, delay: 0.2, ease: "circOut" }} />
+        
+        <circle cx="50" cy="50" r="20" fill="none" stroke="#f8fafc" strokeWidth="8" />
+        <motion.circle cx="50" cy="50" r="20" fill="none" stroke="#f59e0b" strokeWidth="8" strokeDasharray="125.6" initial={{ strokeDashoffset: 125.6 }} animate={{ strokeDashoffset: 125.6 * (1 - 0.35) }} strokeLinecap="round" transition={{ duration: 2, delay: 0.4, ease: "circOut" }} />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-slate-100 overflow-hidden ring-2 ring-white">
+             <img src="https://i.pravatar.cc/100?u=anima" alt="User avatar" className="w-full h-full object-cover" />
+          </div>
+      </div>
+    </div>
+    <div className="mt-4 flex flex-col items-center">
+      <h4 className="font-black text-slate-800 text-[12px] tracking-tight mb-1">Statistics</h4>
+      <div className="flex gap-3">
+        <span className="flex items-center gap-1 text-[8px] font-black text-slate-300 uppercase"><div className="w-1 h-1 rounded-full bg-slate-200" /> Inactive</span>
+        <span className="flex items-center gap-1 text-[8px] font-black text-indigo-600 uppercase"><div className="w-1 h-1 rounded-full bg-indigo-600" /> 254 Active</span>
+      </div>
+    </div>
+  </div>
+);
+
+const GoProCard = () => (
+  <div className="w-full h-full rounded-[2.5rem] bg-indigo-600 p-7 shadow-2xl shadow-indigo-600/30 flex flex-col justify-between">
+    <div className="flex flex-col gap-1.5">
+      <h4 className="font-black text-white text-xl tracking-tight leading-none">Go Pro</h4>
+      <p className="text-indigo-100/70 text-[10px] font-medium leading-relaxed max-w-[120px]">
+        Upgrade your plans to get pro benefits
+      </p>
+    </div>
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="bg-white py-2.5 rounded-xl text-indigo-600 font-black text-[10px] uppercase tracking-widest shadow-lg"
+    >
+      Let's Start
+    </motion.button>
+  </div>
+);
+
+const RevenueCard = () => (
+  <div className="w-full h-full rounded-[2.5rem] bg-white p-7 shadow-2xl shadow-indigo-500/10 flex flex-col border border-slate-100">
+    <div className="flex items-center justify-between mb-3">
+      <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500 shadow-sm">
+          <DollarSign size={18} className="stroke-[3]" />
+      </div>
+      <MoreHorizontal size={18} className="text-slate-200" />
+    </div>
+    <div className="mb-4">
+      <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-0.5">Total Revenue</p>
+      <p className="text-2xl font-black text-slate-900 tracking-tight">$92,983</p>
+    </div>
+    <div className="w-full h-2.5 bg-slate-50 rounded-full overflow-hidden border border-slate-100 mt-auto">
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: '65%' }}
+        className="h-full bg-indigo-600 rounded-full"
+      />
+    </div>
+  </div>
+);
+
+const CalendarGridCard = () => (
+  <div className="w-full h-full rounded-[2.5rem] bg-white p-7 shadow-2xl shadow-indigo-500/10 border border-slate-100">
+    <div className="flex items-center justify-between mb-6">
+      <h4 className="font-black text-slate-800 text-sm tracking-tight uppercase tracking-widest">July 2022</h4>
+      <div className="flex gap-1.5">
+        <button title="Previous" className="w-6 h-6 rounded-full border border-slate-100 flex items-center justify-center text-slate-400"><ChevronRight className="rotate-180" size={12} /></button>
+        <button title="Next" className="w-6 h-6 rounded-full border border-slate-100 flex items-center justify-center text-slate-400"><ChevronRight size={12} /></button>
+      </div>
+    </div>
+    <div className="grid grid-cols-7 gap-y-3 gap-x-1.5 text-center">
+      {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => (
+        <span key={d} className="text-[8px] font-black text-slate-300">{d}</span>
+      ))}
+      {[...Array(31)].map((_, i) => (
+        <div key={i} className={`text-[10px] font-bold h-6 w-6 flex items-center justify-center rounded-full ${i+1 === 10 ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+          {i + 1}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const MoodboardCard = () => (
+  <div className="w-full h-full rounded-[2.5rem] bg-white p-6 shadow-2xl shadow-indigo-500/10 border border-slate-100 flex flex-col gap-3">
+    <div className="flex items-center justify-between">
+      <h4 className="font-black text-slate-800 text-sm tracking-tight">Moodboard</h4>
+      <span className="px-2.5 py-0.5 bg-amber-50 text-amber-600 text-[8px] font-black uppercase tracking-widest rounded-full">Low</span>
+    </div>
+    <div className="grid grid-cols-2 gap-2 flex-1">
+      <div className="rounded-xl bg-slate-50 overflow-hidden"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format" alt="Scene 1" className="w-full h-full object-cover" /></div>
+      <div className="rounded-xl bg-slate-50 overflow-hidden"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format" alt="Scene 2" className="w-full h-full object-cover" /></div>
+    </div>
+  </div>
+);
+
+const SidebarNavCard = () => (
+  <div className="w-full h-full rounded-[2.5rem] bg-white p-7 shadow-2xl shadow-indigo-500/10 border border-slate-100 flex flex-col gap-7">
+    <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+        <Layout size={20} />
+    </div>
+    <div className="flex flex-col gap-5">
+      {[
+        { label: 'Home', icon: Layout, active: true },
+        { label: 'Messages', icon: MessageSquare },
+        { label: 'Tasks', icon: Zap },
+        { label: 'Members', icon: Users },
+        { label: 'Teams', icon: Users },
+        { label: 'Settings', icon: BarChart3 },
+      ].map(item => (
+        <div key={item.label} className={`flex items-center gap-4 cursor-pointer transition-all ${item.active ? 'text-indigo-600' : 'text-slate-300 hover:text-slate-500'}`}>
+           <item.icon size={18} className={item.active ? "stroke-[3]" : ""} />
+           <span className="text-[12px] font-black tracking-tight">{item.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 
 const DynamicShowcase = () => {
   const [isAssembled, setIsAssembled] = useState(false);
-
-  /* ── Responsive scaling ── */
-  const CANVAS_W = 880;
-  const CANVAS_H = 600;
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const CANVAS_W = 1000;
+  const CANVAS_H = 750;
 
   const updateScale = useCallback(() => {
     if (containerRef.current) {
       const parentWidth = containerRef.current.parentElement?.clientWidth ?? CANVAS_W;
-      const availableWidth = Math.min(parentWidth, CANVAS_W);
+      const availableWidth = Math.min(parentWidth - 32, CANVAS_W);
       setScale(Math.min(availableWidth / CANVAS_W, 1));
     }
   }, []);
@@ -293,218 +278,151 @@ const DynamicShowcase = () => {
     return () => window.removeEventListener('resize', updateScale);
   }, [updateScale]);
 
-  /* Scrambled positions are deliberately spread across the 880×600 canvas.
-     They are defined at 1x and get scaled by the wrapper transform. */
-  const fragments = useMemo(
-    () => [
-      {
-        id: 'sidebar',
-        scrambled: { x: -20, y: 280, rotate: -15, scale: 0.7 },
-        assembled: { x: 16, y: 60, width: '120px', height: '340px' },
-        delay: 0.0,
-        content: <SidebarFragment />,
-      },
-      {
-        id: 'header',
-        scrambled: { x: 350, y: -10, rotate: 8, scale: 0.65 },
-        assembled: { x: 148, y: 60, width: '680px', height: '44px' },
-        delay: 0.05,
-        content: <HeaderFragment />,
-      },
-      {
-        id: 'stat1',
-        scrambled: { x: 680, y: 350, rotate: 22, scale: 0.55 },
-        assembled: { x: 148, y: 116, width: '160px', height: '100px' },
-        delay: 0.1,
-        content: <StatsCard icon={Users} label="Active Users" value="2,847" change="+12%" color="bg-sky-500/30" />,
-      },
-      {
-        id: 'stat2',
-        scrambled: { x: 120, y: 420, rotate: -25, scale: 0.6 },
-        assembled: { x: 320, y: 116, width: '160px', height: '100px' },
-        delay: 0.15,
-        content: <StatsCard icon={TrendingUp} label="Revenue" value="$48.2K" change="+8.4%" color="bg-emerald-500/30" />,
-      },
-      {
-        id: 'stat3',
-        scrambled: { x: 550, y: 30, rotate: 18, scale: 0.5 },
-        assembled: { x: 492, y: 116, width: '160px', height: '100px' },
-        delay: 0.2,
-        content: <StatsCard icon={Activity} label="Requests/s" value="1,204" change="+24%" color="bg-amber-500/30" />,
-      },
-      {
-        id: 'stat4',
-        scrambled: { x: 40, y: 50, rotate: -12, scale: 0.55 },
-        assembled: { x: 664, y: 116, width: '164px', height: '100px' },
-        delay: 0.25,
-        content: <StatsCard icon={Shield} label="Security" value="99.9%" change="+0.1%" color="bg-indigo-500/30" />,
-      },
-      {
-        id: 'chart',
-        scrambled: { x: 300, y: 350, rotate: 10, scale: 0.45 },
-        assembled: { x: 148, y: 228, width: '504px', height: '172px' },
-        delay: 0.3,
-        content: <ChartFragment />,
-      },
-      {
-        id: 'activity',
-        scrambled: { x: 700, y: 150, rotate: -20, scale: 0.5 },
-        assembled: { x: 664, y: 228, width: '164px', height: '172px' },
-        delay: 0.35,
-        content: <ActivityFragment />,
-      },
-      {
-        id: 'progress',
-        scrambled: { x: 200, y: 150, rotate: 30, scale: 0.5 },
-        assembled: { x: 148, y: 412, width: '380px', height: '140px' },
-        delay: 0.4,
-        content: <ProgressFragment />,
-      },
-      {
-        id: 'donut',
-        scrambled: { x: 500, y: 450, rotate: -35, scale: 0.45 },
-        assembled: { x: 540, y: 412, width: '120px', height: '140px' },
-        delay: 0.45,
-        content: <MiniDonutFragment />,
-      },
-    ],
-    []
-  );
+  const fragments = useMemo(() => [
+    {
+      id: 'sidebar',
+      scrambled: { x: -100, y: 150, rotate: -12, scale: 0.8 },
+      assembled: { x: 20, y: 20, width: '220px', height: '510px' },
+      content: <SidebarNavCard />,
+      delay: 0.1
+    },
+    {
+      id: 'gopro',
+      scrambled: { x: 50, y: 650, rotate: 15, scale: 0.75 },
+      assembled: { x: 20, y: 550, width: '220px', height: '180px' },
+      content: <GoProCard />,
+      delay: 0.2
+    },
+    {
+      id: 'moodboard',
+      scrambled: { x: 300, y: -120, rotate: 8, scale: 0.7 },
+      assembled: { x: 260, y: 20, width: '350px', height: '240px' },
+      content: <MoodboardCard />,
+      delay: 0.3
+    },
+    {
+      id: 'brainstorming',
+      scrambled: { x: 400, y: 400, rotate: -6, scale: 0.85 },
+      assembled: { x: 260, y: 280, width: '350px', height: '240px' },
+      content: <BrainstormingCard />,
+      delay: 0.4
+    },
+    {
+      id: 'revenue',
+      scrambled: { x: 800, y: 650, rotate: -10, scale: 0.8 },
+      assembled: { x: 260, y: 540, width: '350px', height: '190px' },
+      content: <RevenueCard />,
+      delay: 0.5
+    },
+    {
+      id: 'deliveries',
+      scrambled: { x: 650, y: -100, rotate: -5, scale: 0.9 },
+      assembled: { x: 630, y: 20, width: '350px', height: '200px' },
+      content: <ProjectDeliveriesCard />,
+      delay: 0.6
+    },
+    {
+      id: 'calendar',
+      scrambled: { x: 1050, y: 200, rotate: 20, scale: 0.75 },
+      assembled: { x: 630, y: 240, width: '350px', height: '280px' },
+      content: <CalendarGridCard />,
+      delay: 0.7
+    },
+    {
+      id: 'stats',
+      scrambled: { x: 900, y: 450, rotate: 12, scale: 0.8 },
+      assembled: { x: 630, y: 540, width: '350px', height: '190px' },
+      content: <StatisticsConcentricCard />,
+      delay: 0.8
+    }
+  ], []);
 
   return (
-    <section className="relative py-16 md:py-32 bg-slate-950 overflow-hidden select-none">
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.05)_0%,rgba(15,23,42,0)_70%)] pointer-events-none" />
-
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Section Heading */}
-        <div className="text-center mb-12 md:mb-16">
+    <section id="showcase" className="relative py-32 bg-slate-50 overflow-hidden select-none">
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,0.1)_0%,rgba(255,255,255,0)_60%)] pointer-events-none" />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight"
+            className="text-4xl md:text-7xl font-black text-slate-900 mb-6 uppercase tracking-tighter"
           >
-            Built for the <span className="text-sky-500">Future</span>
+            Precision Meets <span className="text-indigo-600">Play</span>
           </motion.h2>
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 100 }}
-            viewport={{ once: true }}
-            className="h-1 bg-sky-500 mx-auto rounded-full"
-          />
+          <p className="text-slate-500 text-sm md:text-lg max-w-2xl mx-auto font-medium mb-12">
+            Reconstructing fragmented systems into a unified architecture.
+          </p>
         </div>
 
-        {/* ═══════════════════════════════════════════ */}
-        {/* ──  SCRAMBLE → ASSEMBLE DASHBOARD AREA  ── */}
-        {/* ═══════════════════════════════════════════ */}
-        <motion.div
+        {/* ── SHOWCASE AREA ── */}
+        <div 
           ref={containerRef}
-          className="relative w-full max-w-[880px] mx-auto mt-16 md:mt-32"
-          animate={{ height: CANVAS_H * scale }}
-          transition={{ duration: 0 }}
+          className="relative mx-auto mt-8 flex flex-col items-center w-full"
         >
-        <motion.div
-          className="rounded-[20px] md:rounded-[40px] bg-slate-900/30 border border-white/5 shadow-2xl overflow-hidden relative origin-top-left"
-          animate={{
-            width: CANVAS_W,
-            height: CANVAS_H,
-            scale: scale,
-          }}
-          transition={{ duration: 0 }}
-        >
-          {/* Background grid */}
-          <div className="absolute inset-0 opacity-[0.03] mesh-grid" />
-
-          {/* Scan line effect when assembling */}
-          <AnimatePresence>
-            {isAssembled && (
-              <motion.div
-                initial={{ y: -10, opacity: 0 }}
-                animate={{ y: 610, opacity: [0, 1, 1, 0] }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1.5, ease: 'linear' }}
-                className="showcase-scan-line"
-              />
-            )}
-          </AnimatePresence>
-
-          {/* Corner label */}
-          <div className="absolute top-8 left-8 z-30">
-            <h4 className="text-sky-500 font-bold tracking-[0.3em] uppercase text-xs mb-2">
-              {isAssembled ? 'System Online' : '3D Core Module'}
-            </h4>
-            <motion.div
-              animate={{ width: isAssembled ? 80 : 48 }}
-              className="h-0.5 bg-sky-500/50 rounded-full"
-            />
-          </div>
-
-          {/* Status indicator */}
-          <div className="absolute top-8 right-8 z-30 flex items-center gap-2">
-            <motion.div
-              animate={{ backgroundColor: isAssembled ? '#22c55e' : '#64748b' }}
-              className="w-2 h-2 rounded-full"
-            />
-            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-slate-500">
-              {isAssembled ? 'Initialized' : 'Standby'}
-            </span>
-          </div>
-
-          {/* Dashboard Fragments */}
-          {fragments.map((f) => (
-            <DashboardFragment
-              key={f.id}
-              scrambled={f.scrambled}
-              assembled={f.assembled}
-              isAssembled={isAssembled}
-              delay={f.delay}
+          <motion.div
+            className="relative bg-white/40 backdrop-blur-sm rounded-[3rem] border border-slate-200/50 overflow-hidden shadow-sm"
+            animate={{
+               width: CANVAS_W * scale,
+               height: CANVAS_H * scale
+            }}
+          >
+            <motion.div 
+              className="absolute top-0 left-0 origin-top-left"
+              animate={{ 
+                scale,
+                width: CANVAS_W,
+                height: CANVAS_H
+              }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              {f.content}
-            </DashboardFragment>
-          ))}
+              <div className="absolute inset-0 mesh-grid opacity-[0.03]" />
+              
+              <AnimatePresence>
+                {fragments.map((f) => (
+                  <DashboardFragment
+                    key={f.id}
+                    scrambled={f.scrambled}
+                    assembled={f.assembled}
+                    isAssembled={isAssembled}
+                    delay={f.delay}
+                  >
+                    {f.content}
+                  </DashboardFragment>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </motion.div>
 
-          {/* CTA / Initialize button — overlays when not assembled */}
-          <AnimatePresence>
-            {!isAssembled && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, transition: { duration: 0.3 } }}
-                className="absolute bottom-8 right-8 z-30 flex flex-col items-end"
-              >
-                <p className="text-white/50 text-sm font-medium tracking-wide mb-4 text-right max-w-[220px]">
-                  Scattered system modules await assembly. Initialize to construct the dashboard.
-                </p>
-                <motion.button
-                  onClick={() => setIsAssembled(true)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-3 rounded-full border border-sky-500/40 bg-sky-500/15 text-sky-400 text-xs font-bold uppercase tracking-[0.25em] hover:bg-sky-500/25 hover:border-sky-500/60 transition-all shadow-lg shadow-sky-500/10 backdrop-blur-sm"
-                >
-                  Initialize System
-                </motion.button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Reset button — shows after assembled */}
-          <AnimatePresence>
-            {isAssembled && (
-              <motion.button
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 1.2 }}
-                onClick={() => setIsAssembled(false)}
-                className="absolute bottom-6 right-6 z-30 px-5 py-2 rounded-full border border-white/10 bg-slate-800/60 text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] hover:text-sky-400 hover:border-sky-500/30 transition-all backdrop-blur-sm"
-              >
-                Scramble
-              </motion.button>
-            )}
-          </AnimatePresence>
-        </motion.div>
-        </motion.div>
+          {/* ── EXTERNAL CONTROLS ── */}
+          <div className="mt-16 flex flex-col items-center gap-6">
+            <motion.p
+              animate={{ opacity: isAssembled ? 0 : 1 }}
+              className="text-slate-400 text-xs font-bold uppercase tracking-widest text-center"
+            >
+              System modules awaiting alignment
+            </motion.p>
+            
+            <motion.button
+              onClick={() => setIsAssembled(!isAssembled)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all duration-700 shadow-2xl relative overflow-hidden ${isAssembled ? 'bg-slate-900 text-indigo-400' : 'bg-indigo-600 text-white shadow-indigo-500/40'}`}
+            >
+              <span className="relative z-10 flex items-center gap-3">
+                {isAssembled ? 'Reset Components' : 'Initialize Construct'}
+                {isAssembled ? <ChevronRight className="rotate-180" size={16} /> : <Rocket size={16} />}
+              </span>
+              {!isAssembled && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                />
+              )}
+            </motion.button>
+          </div>
+        </div>
       </div>
     </section>
   );

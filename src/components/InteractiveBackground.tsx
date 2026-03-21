@@ -30,7 +30,7 @@ const InteractiveBackground: React.FC = () => {
         this.baseY = y;
         this.size = Math.random() * 2 + 1;
         this.density = Math.random() * 30 + 1;
-        this.color = `rgba(14, 165, 233, ${Math.random() * 0.3 + 0.1})`;
+        this.color = `rgba(99, 102, 241, ${Math.random() * 0.3 + 0.1})`;
       }
 
       draw() {

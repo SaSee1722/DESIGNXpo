@@ -39,8 +39,27 @@ body {
     @apply opacity-100 blur-md;
   }
 
+  @keyframes sky-glow {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba(14, 165, 233, 0.4)) drop-shadow(0 0 8px rgba(14, 165, 233, 0.2)); }
+    50% { filter: drop-shadow(0 0 6px rgba(14, 165, 233, 0.8)) drop-shadow(0 0 15px rgba(14, 165, 233, 0.4)); }
+  }
+  
+  .sky-glow {
+    animation: sky-glow 3s infinite ease-in-out;
+  }
+  
+  @keyframes oscillate {
+    0%, 100% { transform: rotate(-0.5deg) translateY(0); }
+    50% { transform: rotate(0.5deg) translateY(4px); }
+  }
+  
+  .oscillate {
+    animation: oscillate 8s infinite ease-in-out;
+  }
+
   .mesh-grid {
-    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
@@ -72,8 +91,8 @@ body {
   }
   
   .showcase-scan-line {
-    @apply absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent z-30 pointer-events-none;
-    box-shadow: 0 0 30px 10px rgba(14,165,233,0.15);
+    @apply absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-indigo-400 to-transparent z-30 pointer-events-none;
+    box-shadow: 0 0 30px 10px rgba(99,102,241,0.15);
   }
 }
 

@@ -18,7 +18,7 @@ const FuturisticBackground: React.FC = () => {
                     repeat: Infinity,
                     ease: "linear",
                 }}
-                className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-sky-200/40 rounded-full blur-[120px]"
+                className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-indigo-200/40 rounded-full blur-[120px]"
             />
             <m.div
                 animate={{
@@ -32,6 +32,19 @@ const FuturisticBackground: React.FC = () => {
                     ease: "linear",
                 }}
                 className="absolute bottom-[10%] right-[-5%] w-[50%] h-[50%] bg-violet-200/40 rounded-full blur-[140px]"
+            />
+            <m.div
+                animate={{
+                    scale: [1, 1.2, 1],
+                    x: [0, 30, 0],
+                    y: [0, -40, 0],
+                }}
+                transition={{
+                    duration: 22,
+                    repeat: Infinity,
+                    ease: "linear",
+                }}
+                className="absolute top-[20%] right-[15%] w-[30%] h-[30%] bg-fuchsia-100/30 rounded-full blur-[100px]"
             />
 
 
@@ -55,7 +68,7 @@ const FuturisticBackground: React.FC = () => {
                         ease: "easeInOut",
                         delay: Math.random() * 10,
                     }}
-                    className="absolute w-2 h-2 bg-sky-400 rounded-full blur-[2px]"
+                    className="absolute w-2 h-2 bg-indigo-400 rounded-full blur-[2px]"
                 />
             ))}
         </div>

@@ -3,23 +3,43 @@ import { motion } from 'framer-motion';
 import { Trophy, ShieldCheck } from 'lucide-react';
 import { SectionTitle, containerVariants, itemVariants } from './shared';
 
-const PrizeCard = ({ rank, amount, color }: { rank: string, amount: string, color: string, delay: number }) => (
+const PrizeCard = ({ rank, amount, color, delay }: { rank: string, amount: string, color: string, delay: number }) => (
   <motion.div 
     variants={itemVariants}
-    whileHover={{ y: -10, scale: 1.02 }}
-    className={`p-10 rounded-[2.5rem] glass border border-sky-100 shadow-xl flex flex-col items-center text-center relative overflow-hidden group hover:bg-white transition-all duration-500`}
+    custom={delay}
+    whileHover={{ y: 5, scale: 1.02 }}
+    className="relative group pt-16 flex flex-col items-center"
   >
-    <div className={`absolute top-0 left-0 w-full h-2 ${color}`} />
-    <div className={`w-16 h-16 rounded-3xl mb-6 ${color} flex items-center justify-center text-white shadow-lg group-hover:rotate-12 transition-transform`}>
-      <Trophy className="w-8 h-8" />
+    {/* Visual Tether */}
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1.5px] h-16 pointer-events-none overflow-visible">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 border-slate-200 bg-white" />
+      <motion.div 
+        animate={{ height: [64, 70, 64] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        className="w-full bg-gradient-to-b from-slate-300 via-slate-200 to-transparent opacity-60" 
+      />
     </div>
-    <h3 className="text-xl font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">{rank}</h3>
-    <div className="text-5xl font-black text-slate-900 tracking-tighter mb-4">
-      <span className="text-2xl font-bold text-sky-600 mr-1">₹</span>{amount}
-    </div>
-    <div className="text-sm font-semibold text-slate-500 bg-slate-50 px-4 py-2 rounded-full border border-slate-100 group-hover:bg-sky-50 group-hover:text-sky-600 transition-colors">
-      Cash Prize + Goodies
-    </div>
+
+    <motion.div 
+      animate={{ rotate: [-0.5, 0.5, -0.5] }}
+      transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+      className={`p-10 rounded-[3rem] glass border border-white/60 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] flex flex-col items-center text-center relative overflow-hidden group hover:backdrop-blur-3xl transition-all duration-500`}
+    >
+      <div className={`absolute top-0 left-0 w-full h-2 ${color}`} />
+      <div className={`w-18 h-18 rounded-3xl mb-8 ${color} flex items-center justify-center text-white shadow-xl group-hover:rotate-12 group-hover:scale-110 transition-all duration-500`}>
+        <Trophy className="w-10 h-10" />
+      </div>
+      <h3 className="text-sm font-black text-slate-400 uppercase tracking-[0.4em] mb-4">{rank}</h3>
+      <div className="text-6xl font-black text-slate-800 tracking-tighter mb-6 flex items-start">
+        <span className="text-xl font-bold text-sky-500 mt-2 mr-1">₹</span>{amount}
+      </div>
+      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 bg-slate-50/80 px-5 py-2.5 rounded-2xl border border-slate-100 group-hover:bg-sky-500/10 group-hover:text-sky-600 group-hover:border-sky-500/20 transition-all duration-500">
+        Cash Prize + Goodies
+      </div>
+
+      {/* Animated glow */}
+      <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-sky-400/10 blur-[40px] rounded-full group-hover:bg-sky-400/20 transition-colors" />
+    </motion.div>
   </motion.div>
 );
 
