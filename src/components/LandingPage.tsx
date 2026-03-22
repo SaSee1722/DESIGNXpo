@@ -3,9 +3,9 @@ import { LazyMotion, domAnimation } from 'framer-motion';
 import FuturisticBackground from './FuturisticBackground';
 import Nav from './sections/Nav';
 import Hero from './sections/Hero';
-import DynamicShowcase from './sections/DynamicShowcase';
 
-// Lazy load sections below the fold
+// Lazy load everything below the hero fold
+const DynamicShowcase = lazy(() => import('./sections/DynamicShowcase'));
 const About = lazy(() => import('./sections/About'));
 const Format = lazy(() => import('./sections/Format'));
 const Tools = lazy(() => import('./sections/Tools'));
@@ -28,8 +28,8 @@ const LandingPage = () => {
         <Nav />
         <main className="relative z-10">
           <Hero />
-          <DynamicShowcase />
           <Suspense fallback={<SectionLoader />}>
+            <DynamicShowcase />
             <About />
             <Format />
             <Tools />

@@ -126,3 +126,112 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* ── Performance: GPU-composited background animations ── */
+@keyframes bg-float-1 {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.2) translate(50px, 30px); }
+}
+
+@keyframes bg-float-2 {
+  0%, 100% { transform: scale(1.2) translate(0, 0); }
+  50% { transform: scale(1) translate(-40px, -20px); }
+}
+
+@keyframes bg-float-3 {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.2) translate(30px, -40px); }
+}
+
+@keyframes bg-floaty {
+  0% { transform: translateY(0); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(-50px); opacity: 0; }
+}
+
+/* Hero floating UI elements — GPU composited */
+@keyframes hero-float-1 {
+  0%, 100% { transform: scale(0.9) translateY(0px); }
+  50% { transform: scale(0.9) translateY(-12px); }
+}
+
+@keyframes hero-float-2 {
+  0%, 100% { transform: scale(0.9) translateY(0px); }
+  33% { transform: scale(0.9) translateY(-8px); }
+  66% { transform: scale(0.9) translateY(4px); }
+}
+
+@keyframes hero-float-3 {
+  0%, 100% { transform: scale(0.9) translateY(0px); }
+  50% { transform: scale(0.9) translateY(-15px); }
+}
+
+/* CTA section particles — pure CSS, no JS re-renders */
+@keyframes cta-particle {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  30% { opacity: 0.4; }
+  70% { opacity: 0.3; }
+  100% { transform: translateY(-120px) scale(1.2); opacity: 0; }
+}
+
+/* Button shimmer sweep */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* ── FuturisticBackground orbs ── */
+.bg-orb-1 {
+  animation: bg-float-1 20s linear infinite;
+  will-change: transform;
+}
+
+.bg-orb-2 {
+  animation: bg-float-2 25s linear infinite;
+  will-change: transform;
+}
+
+.bg-orb-3 {
+  animation: bg-float-3 22s linear infinite;
+  will-change: transform;
+}
+
+/* ── FuturisticBackground particles — use CSS custom properties for dynamic values ── */
+.bg-particle {
+  left: var(--x);
+  top: var(--y);
+  opacity: var(--o);
+  animation: bg-floaty var(--dur) ease-in-out var(--delay) infinite;
+  will-change: transform, opacity;
+}
+
+/* ── Hero glow blobs ── */
+.hero-glow-1 {
+  animation: bg-float-1 20s linear infinite;
+}
+
+.hero-glow-2 {
+  animation: bg-float-2 25s linear infinite;
+}
+
+/* ── Hero floating UI items — use CSS custom properties for position/timing ── */
+.hero-floating-item {
+  left: var(--left);
+  top: var(--top);
+  transform: scale(var(--s, 0.9));
+  animation: var(--anim) var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+
+/* ── RegisterCTA particles — use CSS custom properties ── */
+.cta-particle-el {
+  left: var(--x);
+  bottom: -10%;
+  animation: cta-particle var(--dur) ease-in-out var(--delay) infinite;
+  will-change: transform, opacity;
+}

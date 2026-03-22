@@ -12,21 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
-    "@react-three/postprocessing": "^3.0.4",
     "@supabase/supabase-js": "^2.99.3",
-    "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "canvas-confetti": "^1.9.4",
     "framer-motion": "^12.37.0",
     "lucide-react": "^0.577.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.1",
     "tailwindcss": "^4.2.1",
-    "three": "^0.183.2",
     "typescript": "^5.9.3"
   },
   "devDependencies": {

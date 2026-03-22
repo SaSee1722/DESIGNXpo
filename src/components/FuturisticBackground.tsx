@@ -1,78 +1,40 @@
 import React, { useMemo } from 'react';
-import { m } from 'framer-motion';
 
 const FuturisticBackground: React.FC = () => {
-    const particles = useMemo(() => Array.from({ length: 20 }), []);
+    // Stable random values computed once per mount
+    const particles = useMemo(() =>
+        Array.from({ length: 8 }, () => ({
+            x: `${Math.random() * 100}%`,
+            y: `${Math.random() * 100}%`,
+            o: `${Math.random() * 0.3}`,
+            dur: `${Math.random() * 8 + 8}s`,
+            delay: `${Math.random() * 10}s`,
+        })),
+    []);
 
     return (
         <div className="fixed inset-0 bg-white overflow-hidden -z-10">
-            {/* Soft Ambient Orbs */}
-            <m.div
-                animate={{
-                    scale: [1, 1.2, 1],
-                    x: [0, 50, 0],
-                    y: [0, 30, 0],
-                }}
-                transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                }}
-                className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-indigo-200/40 rounded-full blur-[120px]"
-            />
-            <m.div
-                animate={{
-                    scale: [1, 1.1, 1],
-                    x: [0, -40, 0],
-                    y: [0, -20, 0],
-                }}
-                transition={{
-                    duration: 25,
-                    repeat: Infinity,
-                    ease: "linear",
-                }}
-                className="absolute bottom-[10%] right-[-5%] w-[50%] h-[50%] bg-violet-200/40 rounded-full blur-[140px]"
-            />
-            <m.div
-                animate={{
-                    scale: [1, 1.2, 1],
-                    x: [0, 30, 0],
-                    y: [0, -40, 0],
-                }}
-                transition={{
-                    duration: 22,
-                    repeat: Infinity,
-                    ease: "linear",
-                }}
-                className="absolute top-[20%] right-[15%] w-[30%] h-[30%] bg-fuchsia-100/30 rounded-full blur-[100px]"
-            />
+            {/* Soft Ambient Orbs — CSS classes, no inline styles */}
+            <div className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-indigo-200/40 rounded-full blur-[120px] bg-orb-1" />
+            <div className="absolute bottom-[10%] right-[-5%] w-[50%] h-[50%] bg-violet-200/40 rounded-full blur-[140px] bg-orb-2" />
+            <div className="absolute top-[20%] right-[15%] w-[30%] h-[30%] bg-fuchsia-100/30 rounded-full blur-[100px] bg-orb-3" />
 
-
-            {/* Floaties */}
-            {particles.map((_, i) => (
-                <m.div
+            {/* Minimal floaties — CSS custom properties for dynamic values */}
+            {particles.map((p, i) => (
+                <div
                     key={i}
-                    initial={{
-                        x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : 0,
-                        y: typeof window !== 'undefined' ? Math.random() * window.innerHeight : 0,
-                        opacity: Math.random() * 0.3,
-                        scale: Math.random() * 0.5 + 0.5,
-                    }}
-                    animate={{
-                        y: [null, -50],
-                        opacity: [0, 0.3, 0],
-                    }}
-                    transition={{
-                        duration: Math.random() * 8 + 8,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: Math.random() * 10,
-                    }}
-                    className="absolute w-2 h-2 bg-indigo-400 rounded-full blur-[2px]"
+                    className="absolute w-2 h-2 bg-indigo-400 rounded-full blur-[2px] bg-particle"
+                    style={{
+                        '--x': p.x,
+                        '--y': p.y,
+                        '--o': p.o,
+                        '--dur': p.dur,
+                        '--delay': p.delay,
+                    } as React.CSSProperties}
                 />
             ))}
         </div>
     );
 };
 
-export default FuturisticBackground;
+export default React.memo(FuturisticBackground);

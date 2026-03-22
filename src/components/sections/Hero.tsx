@@ -1,23 +1,15 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Sparkles, Settings, Rocket, Layers, ChevronRight, Plane, Clock, Globe, Package, MapPin, Send, X, CheckCircle2, Circle, ChevronLeft, Search, Bell, Home } from 'lucide-react';
-import InteractiveBackground from '../InteractiveBackground';
 
 /* ═══════════════════════════════════════════════════════ */
-/* ── ELLIPTICAL ORBIT SYSTEM                          ── */
+/* ── HANGING UI CARD COMPONENTS                       ── */
 /* ═══════════════════════════════════════════════════════ */
-
-/* ── HANGING UI HELPER COMPONENT ── */
-/* ── HANGING UI CARD COMPONENTS (Extracted from reference image) ── */
-
-
-/* ── HANGING UI CARD COMPONENTS (Refined Ultra-Compact Style) ── */
-
 
 const ToolBarBadge = React.memo(() => (
-  <div className="flex items-center gap-1.5 p-1.5 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 will-change-transform">
+  <div className="flex items-center gap-1.5 p-1.5 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50">
     {[Plane, Clock, Package, Globe].map((Icon, i) => (
-      <div key={i} className="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer">
+      <div key={i} className="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
         <Icon size={12} />
       </div>
     ))}
@@ -25,7 +17,7 @@ const ToolBarBadge = React.memo(() => (
 ));
 
 const LocationCard = React.memo(() => (
-  <div className="flex items-center gap-2.5 p-2 px-3 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 will-change-transform">
+  <div className="flex items-center gap-2.5 p-2 px-3 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50">
     <div className="w-6 h-6 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
       <MapPin size={12} />
     </div>
@@ -34,14 +26,14 @@ const LocationCard = React.memo(() => (
 ));
 
 const ActionPills = React.memo(() => (
-  <div className="flex flex-col gap-1.5 p-1.5 bg-white/90 backdrop-blur-xl border border-white/50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 will-change-transform">
-    <button className="px-5 py-2 bg-indigo-600 rounded-2xl text-[9px] font-black text-white uppercase tracking-widest shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all">Send</button>
+  <div className="flex flex-col gap-1.5 p-1.5 bg-white/90 backdrop-blur-xl border border-white/50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50">
+    <button className="px-5 py-2 bg-indigo-600 rounded-2xl text-[9px] font-black text-white uppercase tracking-widest shadow-lg shadow-indigo-200">Send</button>
     <button className="px-5 py-2 bg-slate-50 rounded-2xl text-[9px] font-black text-slate-400 uppercase tracking-widest border border-slate-100">Cancel</button>
   </div>
 ));
 
 const DeliveryTimeline = React.memo(() => (
-  <div className="flex flex-col gap-2.5 p-3 px-4 bg-white/90 backdrop-blur-xl border border-white/50 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 min-w-[140px] will-change-transform">
+  <div className="flex flex-col gap-2.5 p-3 px-4 bg-white/90 backdrop-blur-xl border border-white/50 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 min-w-[140px]">
     <span className="text-[9px] font-black text-indigo-600 uppercase tracking-widest border-b border-indigo-50 pb-1.5 mb-0.5">Live Tracking</span>
     {[
       { label: 'City Hub', time: '12:00 PM', done: true },
@@ -64,16 +56,16 @@ const DeliveryTimeline = React.memo(() => (
 ));
 
 const MiniControls = React.memo(() => (
-   <div className="flex gap-1.5 p-1 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 will-change-transform">
+   <div className="flex gap-1.5 p-1 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50">
       <button 
         aria-label="Previous"
-        className="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
+        className="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400"
       >
          <ChevronLeft size={14} />
       </button>
       <button 
         aria-label="Next"
-        className="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
+        className="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400"
       >
          <ChevronRight size={14} />
       </button>
@@ -81,7 +73,7 @@ const MiniControls = React.memo(() => (
 ));
 
 const HangingIcon = React.memo(({ icon: Icon, color = "indigo" }: { icon: any, color?: string }) => (
-  <div className={`w-10 h-10 rounded-2xl bg-white/90 backdrop-blur-xl border border-white/50 flex items-center justify-center shadow-lg ring-1 ring-slate-200/50 text-${color}-600 will-change-transform`}>
+  <div className={`w-10 h-10 rounded-2xl bg-white/90 backdrop-blur-xl border border-white/50 flex items-center justify-center shadow-lg ring-1 ring-slate-200/50 text-${color}-600`}>
     <Icon size={18} />
   </div>
 ));
@@ -95,118 +87,40 @@ const Tag = React.memo(({ label, active = false }: { label: string; active?: boo
   </div>
 ));
 
+/* ── Floating element positions — CSS animations instead of Framer Motion ── */
 const floatingElements = [
-  { 
-    id: 'toolbar', 
-    delay: 0, 
-    content: <ToolBarBadge />, 
-    position: { left: '8%', top: '25%', mobileLeft: '2%', mobileTop: '6%' },
-    depth: 1.2,
-    showOnMobile: true
-  },
-  { 
-    id: 'timeline', 
-    delay: 0.2, 
-    content: <DeliveryTimeline />, 
-    position: { left: '80%', top: '15%', mobileLeft: '58%', mobileTop: '15%' },
-    depth: 1.5,
-    showOnMobile: true
-  },
-  { 
-    id: 'location', 
-    delay: 0.4, 
-    content: <LocationCard />, 
-    position: { left: '15%', top: '65%', mobileLeft: '5%', mobileTop: '75%' },
-    depth: 0.8,
-    showOnMobile: true
-  },
-  { 
-    id: 'actions', 
-    delay: 0.6, 
-    content: <ActionPills />, 
-    position: { left: '75%', top: '55%', mobileLeft: '65%', mobileTop: '82%' },
-    depth: 1.1,
-    showOnMobile: true
-  },
-  { 
-    id: 'home-icon', 
-    delay: 0.7, 
-    content: <HangingIcon icon={Home} color="slate" />, 
-    position: { left: '25%', top: '82%', mobileLeft: '10%', mobileTop: '85%' },
-    depth: 0.9,
-    showOnMobile: false
-  },
-  { 
-    id: 'bell-icon', 
-    delay: 0.9, 
-    content: <HangingIcon icon={Bell} color="indigo" />, 
-    position: { left: '70%', top: '80%', mobileLeft: '80%', mobileTop: '85%' },
-    depth: 1.3,
-    showOnMobile: false
-  },
-  { 
-    id: 'controls', 
-    delay: 0.8, 
-    content: <MiniControls />, 
-    position: { left: '10%', top: '85%', mobileLeft: '0%', mobileTop: '92%' },
-    depth: 1.4,
-    showOnMobile: true
-  },
-  { 
-    id: 'team', 
-    delay: 1, 
-    content: <Tag label="ELITE DESIGNERS" active />, 
-    position: { left: '82%', top: '88%', mobileLeft: '72%', mobileTop: '92%' },
-    depth: 0.7,
-    showOnMobile: true
-  },
+  { id: 'toolbar', content: <ToolBarBadge />, position: { left: '8%', top: '25%' }, showOnMobile: true },
+  { id: 'timeline', content: <DeliveryTimeline />, position: { left: '80%', top: '15%' }, showOnMobile: true },
+  { id: 'location', content: <LocationCard />, position: { left: '15%', top: '65%' }, showOnMobile: true },
+  { id: 'actions', content: <ActionPills />, position: { left: '75%', top: '55%' }, showOnMobile: true },
+  { id: 'home-icon', content: <HangingIcon icon={Home} color="slate" />, position: { left: '25%', top: '82%' }, showOnMobile: false },
+  { id: 'bell-icon', content: <HangingIcon icon={Bell} color="indigo" />, position: { left: '70%', top: '80%' }, showOnMobile: false },
+  { id: 'controls', content: <MiniControls />, position: { left: '10%', top: '85%' }, showOnMobile: true },
+  { id: 'team', content: <Tag label="ELITE DESIGNERS" active />, position: { left: '82%', top: '88%' }, showOnMobile: true },
 ];
 
-
-const FloatingItem = React.memo(({ el, isMobile, mouseX, mouseY }: { el: any, isMobile: boolean, mouseX: any, mouseY: any }) => {
-  const leftPos = isMobile ? el.position.mobileLeft : el.position.left;
-  const topPos = isMobile ? el.position.mobileTop : el.position.top;
+/* ── Lightweight floating item — CSS animation only, no per-frame JS ── */
+const FloatingItem = React.memo(({ el, isMobile, index }: { el: any, isMobile: boolean, index: number }) => {
+  if (isMobile && !el.showOnMobile) return null;
   
-  // Optimized: Lower magnitude for parallax to maintain 120fps performance
-  const xParallax = useTransform(mouseX, [-0.5, 0.5], [-15 * el.depth, 15 * el.depth]);
-  const yParallax = useTransform(mouseY, [-0.5, 0.5], [-15 * el.depth, 15 * el.depth]);
-
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ 
-        opacity: 1, 
-        scale: isMobile ? 0.75 : (0.9 + (el.depth - 0.7) * 0.15),
-        x: [0, 8 * el.depth, -8 * el.depth, 0],
-        y: [0, -12 * el.depth, 8 * el.depth, 0],
-      }}
-      transition={{ 
-        opacity: { duration: 0.8, delay: el.delay },
-        scale: { duration: 0.8, delay: el.delay },
-        x: { duration: 10 + el.delay * 5, repeat: Infinity, ease: "linear" },
-        y: { duration: 12 + el.delay * 5, repeat: Infinity, ease: "linear" },
-      }}
-      style={{ 
-        left: leftPos, 
-        top: topPos,
-        translateX: xParallax,
-        translateY: yParallax,
-        // Removed dynamic blur filter for butery smoothness on high refresh rate displays
-        willChange: "transform, opacity"
-      }}
-      className="absolute flex flex-col items-center group pointer-events-auto cursor-grab active:cursor-grabbing"
+    <div
+      className="absolute pointer-events-auto hero-floating-item"
+      style={{
+        '--left': el.position.left,
+        '--top': el.position.top,
+        '--s': isMobile ? '0.7' : '0.9',
+        '--anim': `hero-float-${(index % 3) + 1}`,
+        '--dur': `${10 + index * 2}s`,
+        '--delay': `${index * 0.3}s`,
+      } as React.CSSProperties}
     >
-      <motion.div
-        whileHover={{ scale: 1.03 }}
-        transition={{ type: "spring", stiffness: 300, damping: 15 }}
-      >
-        {el.content}
-      </motion.div>
-    </motion.div>
+      {el.content}
+    </div>
   );
 });
 
-const FloatingUI = ({ mouseX, mouseY }: { mouseX: any, mouseY: any }) => {
+const FloatingUI = React.memo(() => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -218,15 +132,12 @@ const FloatingUI = ({ mouseX, mouseY }: { mouseX: any, mouseY: any }) => {
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-      {floatingElements.map((el) => {
-        if (isMobile && !el.showOnMobile) return null;
-        return <FloatingItem key={el.id} el={el} isMobile={isMobile} mouseX={mouseX} mouseY={mouseY} />;
-      })}
+      {floatingElements.map((el, index) => (
+        <FloatingItem key={el.id} el={el} isMobile={isMobile} index={index} />
+      ))}
     </div>
   );
-};
-
-
+});
 
 
 /* ═══════════════════════════════════════════════════════ */
@@ -237,15 +148,6 @@ const Hero = () => {
   const { scrollY } = useScroll();
   const yContent = useTransform(scrollY, [0, 800], [0, 250]);
   const opacity = useTransform(scrollY, [0, 500], [1, 0]);
-  const scale = useTransform(scrollY, [0, 500], [1, 0.92]);
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { damping: 40, stiffness: 90 };
-  const smoothMouseX = useSpring(mouseX, springConfig);
-  const smoothMouseY = useSpring(mouseY, springConfig);
-  const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], [4, -4]);
-  const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], [-4, 4]);
 
   const [timeLeft, setTimeLeft] = useState({
     days: '00',
@@ -287,93 +189,41 @@ const Hero = () => {
     return () => clearInterval(timer);
   }, [calculateTimeLeft]);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX / window.innerWidth - 0.5);
-      mouseY.set(e.clientY / window.innerHeight - 0.5);
-    };
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
-
   return (
     <section
       id="hero"
       className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-slate-50"
     >
-      <InteractiveBackground />
-
-      {/* ── Ambient static orbits ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <svg className="w-full h-full opacity-[0.3]" viewBox="0 0 1440 900">
-          <ellipse
-            cx="720" cy="450" rx="900" ry="250"
-            stroke="#6366F1" strokeWidth="0.5" fill="none"
-            className="opacity-30"
-          />
-          <ellipse
-            cx="720" cy="450" rx="600" ry="180"
-            stroke="#6366F1" strokeWidth="0.5" fill="none"
-            className="opacity-20"
-          />
-        </svg>
-      </div>
-
-      {/* ── Ambient glow blobs ── */}
+      {/* ── Ambient glow blobs — CSS only ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.2, 1] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute -top-32 left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-300/40 via-blue-200/20 to-transparent blur-[140px]"
+        <div
+          className="absolute -top-32 left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-300/40 via-blue-200/20 to-transparent blur-[140px] hero-glow-1"
         />
-        <motion.div
-          animate={{ x: [0, -30, 0], y: [0, 40, 0], scale: [1.2, 1, 1.2] }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-          className="absolute -bottom-40 right-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-300/40 via-violet-200/20 to-transparent blur-[140px]"
+        <div
+          className="absolute -bottom-40 right-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-300/40 via-violet-200/20 to-transparent blur-[140px] hero-glow-2"
         />
       </div>
 
       {/* ── Fine grid overlay ── */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] hero-grid-overlay" />
 
-      {/* ── Central Main-Content Hanging Tether ── */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none z-0 overflow-hidden hidden md:block">
-        <svg className="w-full h-full opacity-30" viewBox="0 0 1440 900" fill="none">
-          <motion.path
-            d="M720,80 L720,320"
-            stroke="#6366F1"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-            animate={{ 
-              d: ["M720,80 L720,320", "M718,80 L722,320", "M720,80 L720,320"],
-              opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <circle cx="720" cy="80" r="4" fill="#6366F1" fillOpacity="0.5" />
-          <circle cx="720" cy="320" r="3" fill="#6366F1" fillOpacity="0.5" />
-        </svg>
-      </div>
-
       {/* ═══════════════════════════════════════════ */}
-      {/* ── FLOATING UI SPATIAL SYSTEM ── */}
+      {/* ── FLOATING UI — CSS animations only ── */}
       {/* ═══════════════════════════════════════════ */}
-      <FloatingUI mouseX={smoothMouseX} mouseY={smoothMouseY} />
-
-
+      <FloatingUI />
 
       {/* ═══════════════════════════════════════════ */}
       {/* ── MAIN CONTENT ── */}
       {/* ═══════════════════════════════════════════ */}
 
       <motion.div
-        style={{ rotateX, rotateY, y: yContent, opacity, scale }}
+        style={{ y: yContent, opacity }}
         className="relative z-10 flex flex-col items-center px-6"
       >
         {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: -30, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8"
         >
@@ -387,8 +237,8 @@ const Hero = () => {
         {/* Title block */}
         <div className="text-center relative select-none">
           <motion.div
-            initial={{ opacity: 0, y: 40, filter: 'blur(12px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center"
           >
@@ -418,51 +268,39 @@ const Hero = () => {
           </p>
         </motion.div>
 
-        {/* ── CTA SUSPENDED SYSTEM ── */}
+        {/* ── CTA Buttons ── */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.4, duration: 1 }}
-          className="flex flex-col items-center group/cta"
+          className="flex flex-col items-center"
         >
-          {/* Central tether line */}
-          <div className="w-[1px] h-12 bg-gradient-to-b from-indigo-400/0 via-indigo-400/40 to-indigo-400/60 mb-[-1px] opacity-[0.5]" />
-
-          <motion.div 
-            animate={{ rotate: [-0.3, 0.3, -0.3], y: [0, 5, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex flex-col sm:flex-row gap-5 items-center justify-center p-2 mb-10"
-          >
+          <div className="flex flex-col sm:flex-row gap-5 items-center justify-center p-2 mb-10 mt-8">
             <motion.button
               onClick={() => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' })}
-              whileHover={{ scale: 1.04, y: -2, rotate: 1 }}
+              whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               className="group relative px-12 py-4.5 rounded-2xl bg-slate-900 text-white font-black uppercase tracking-[0.3em] overflow-hidden shadow-[0_25px_50px_-12px_rgba(15,23,42,0.4)] hover:shadow-indigo-500/30 transition-all text-xs border border-white/10"
             >
               <span className="relative z-10 flex items-center gap-3">
-                Join Challenge <Rocket size={16} className="text-indigo-400 group-hover:translate-x-1 transition-transform" />
+                Join Challenge <Rocket size={16} className="text-indigo-400" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
             </motion.button>
 
             <motion.button
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-              whileHover={{ scale: 1.04, y: -2, rotate: -1 }}
+              whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               className="group relative px-12 py-4.5 rounded-2xl bg-white text-slate-900 font-black uppercase tracking-[0.3em] overflow-hidden shadow-[0_20px_40px_-12px_rgba(99,102,241,0.1)] hover:shadow-indigo-500/20 transition-all text-xs border border-slate-200"
             >
               <span className="relative z-10">Explore Event</span>
-              <div className="absolute inset-0 bg-slate-50 opacity-0 group-hover:opacity-100 transition-opacity" />
             </motion.button>
-          </motion.div>
+          </div>
 
-          {/* ── Suspended Countdown Board ── */}
+          {/* ── Countdown Board ── */}
           <div className="flex flex-col items-center">
-            <div className="w-[1.5px] h-8 bg-indigo-200/50 mb-[-1px]" />
-            <motion.div 
-              animate={{ rotate: [0.5, -0.5, 0.5], y: [0, 8, 0] }}
-              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-              className="bg-white/80 backdrop-blur-3xl border border-white/60 p-5 rounded-[2.5rem] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.05)] flex items-center gap-6 sm:gap-10"
+            <div
+              className="bg-white/80 backdrop-blur-xl border border-white/60 p-5 rounded-[2.5rem] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.05)] flex items-center gap-6 sm:gap-10"
             >
               {[
                 { val: timeLeft.days, label: 'DAYS' },
@@ -479,7 +317,7 @@ const Hero = () => {
                   </span>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </motion.div>
       </motion.div>
