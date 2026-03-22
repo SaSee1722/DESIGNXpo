@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { Sparkles, Settings, Rocket, Layers, ChevronRight, Plane, Clock, Globe, Package, MapPin, Send, X, CheckCircle2, Circle, ChevronLeft, Search, Bell, Home } from 'lucide-react';
 
 /* ═══════════════════════════════════════════════════════ */
@@ -99,27 +99,7 @@ const floatingElements = [
   { id: 'team', content: <Tag label="ELITE DESIGNERS" active />, position: { left: '82%', top: '88%' }, showOnMobile: true },
 ];
 
-/* ── Lightweight floating item — CSS animation only, no per-frame JS ── */
-const FloatingItem = React.memo(({ el, isMobile, index }: { el: any, isMobile: boolean, index: number }) => {
-  if (isMobile && !el.showOnMobile) return null;
-  
-  return (
-    <div
-      className="absolute pointer-events-auto hero-floating-item"
-      style={{
-        '--left': el.position.left,
-        '--top': el.position.top,
-        '--s': isMobile ? '0.7' : '0.9',
-        '--anim': `hero-float-${(index % 3) + 1}`,
-        '--dur': `${10 + index * 2}s`,
-        '--delay': `${index * 0.3}s`,
-      } as React.CSSProperties}
-    >
-      {el.content}
-    </div>
-  );
-});
-
+/* ── Floating UI — uses generated <style> rules, no inline styles ── */
 const FloatingUI = React.memo(() => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -130,10 +110,22 @@ const FloatingUI = React.memo(() => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const floatingCSS = useMemo(() =>
+    floatingElements.map((el, i) => {
+      const s = isMobile ? 0.7 : 0.9;
+      return `.hero-fl-${i}{left:${el.position.left};top:${el.position.top};transform:scale(${s});animation:hero-float-${(i % 3) + 1} ${10 + i * 2}s ease-in-out infinite;animation-delay:${i * 0.3}s;will-change:transform}`;
+    }).join(''),
+  [isMobile]);
+
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <style>{floatingCSS}</style>
       {floatingElements.map((el, index) => (
-        <FloatingItem key={el.id} el={el} isMobile={isMobile} index={index} />
+        isMobile && !el.showOnMobile ? null : (
+          <div key={el.id} className={`absolute pointer-events-auto hero-fl-${index}`}>
+            {el.content}
+          </div>
+        )
       ))}
     </div>
   );

@@ -374,20 +374,12 @@ const DynamicShowcase = () => {
           ref={containerRef}
           className="relative mx-auto mt-8 flex flex-col items-center w-full"
         >
+          <style>{`.sc-outer{width:${CANVAS_W * scale}px;height:${CANVAS_H * scale}px}.sc-inner{transform:scale(${scale});width:${CANVAS_W}px;height:${CANVAS_H}px}`}</style>
           <div
-            className="relative bg-white/40 rounded-[3rem] border border-slate-200/50 overflow-hidden shadow-sm"
-            style={{
-              width: CANVAS_W * scale,
-              height: CANVAS_H * scale,
-            }}
+            className="relative bg-white/40 rounded-[3rem] border border-slate-200/50 overflow-hidden shadow-sm sc-outer"
           >
             <div 
-              className="absolute top-0 left-0 origin-top-left"
-              style={{ 
-                transform: `scale(${scale})`,
-                width: CANVAS_W,
-                height: CANVAS_H,
-              }}
+              className="absolute top-0 left-0 origin-top-left sc-inner"
             >
               <div className="absolute inset-0 mesh-grid opacity-[0.03]" />
               

@@ -12,12 +12,7 @@ const RegisterCTA = () => {
             {[0,1,2,3].map(i => (
                 <div
                     key={i}
-                    className="absolute w-1 h-1 bg-indigo-400 rounded-full cta-particle-el"
-                    style={{
-                        '--x': `${20 + i * 18}%`,
-                        '--dur': `${12 + i * 3}s`,
-                        '--delay': `${i * 4}s`,
-                    } as React.CSSProperties}
+                    className={`absolute w-1 h-1 bg-indigo-400 rounded-full cta-particle-${i}`}
                 />
             ))}
 

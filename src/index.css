@@ -200,38 +200,33 @@ body {
   will-change: transform;
 }
 
-/* ── FuturisticBackground particles — use CSS custom properties for dynamic values ── */
-.bg-particle {
-  left: var(--x);
-  top: var(--y);
-  opacity: var(--o);
-  animation: bg-floaty var(--dur) ease-in-out var(--delay) infinite;
+
+
+/* ── RegisterCTA particles — fully static, no inline styles needed ── */
+.cta-particle-0 {
+  left: 20%;
+  bottom: -10%;
+  animation: cta-particle 12s ease-in-out 0s infinite;
   will-change: transform, opacity;
 }
 
-/* ── Hero glow blobs ── */
-.hero-glow-1 {
-  animation: bg-float-1 20s linear infinite;
-}
-
-.hero-glow-2 {
-  animation: bg-float-2 25s linear infinite;
-}
-
-/* ── Hero floating UI items — use CSS custom properties for position/timing ── */
-.hero-floating-item {
-  left: var(--left);
-  top: var(--top);
-  transform: scale(var(--s, 0.9));
-  animation: var(--anim) var(--dur) ease-in-out infinite;
-  animation-delay: var(--delay);
-  will-change: transform;
-}
-
-/* ── RegisterCTA particles — use CSS custom properties ── */
-.cta-particle-el {
-  left: var(--x);
+.cta-particle-1 {
+  left: 38%;
   bottom: -10%;
-  animation: cta-particle var(--dur) ease-in-out var(--delay) infinite;
+  animation: cta-particle 15s ease-in-out 4s infinite;
+  will-change: transform, opacity;
+}
+
+.cta-particle-2 {
+  left: 56%;
+  bottom: -10%;
+  animation: cta-particle 18s ease-in-out 8s infinite;
+  will-change: transform, opacity;
+}
+
+.cta-particle-3 {
+  left: 74%;
+  bottom: -10%;
+  animation: cta-particle 21s ease-in-out 12s infinite;
   will-change: transform, opacity;
 }
