@@ -111,7 +111,7 @@ const Details = () => (
         className="p-1 glass rounded-[3.5rem] border border-indigo-400/30 shadow-[0_40px_100px_-20px_rgba(79,70,229,0.15)] overflow-hidden group"
       >
         <div className="bg-white/40 backdrop-blur-3xl rounded-[3.25rem] p-10 flex flex-col md:flex-row items-center gap-10 md:gap-14 border border-white/80">
-          <div className="w-56 h-56 rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl relative rotate-3 group-hover:rotate-0 transition-transform duration-700">
+          <div className="w-56 h-56 rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl relative transition-transform duration-700">
             <img src="/team/salabadeshwaran.jpg" alt="Salabadeshwaran" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           </div>
