@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Sparkles, Settings, Rocket, Layers, ChevronRight, Plane, Clock, Globe, Package, MapPin, Send, X, CheckCircle2, Circle, ChevronLeft, Search, Bell, Home } from 'lucide-react';
 import InteractiveBackground from '../InteractiveBackground';
 
@@ -14,34 +14,34 @@ import InteractiveBackground from '../InteractiveBackground';
 /* ── HANGING UI CARD COMPONENTS (Refined Ultra-Compact Style) ── */
 
 
-const ToolBarBadge = () => (
-  <div className="flex items-center gap-1.5 p-1.5 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50">
+const ToolBarBadge = React.memo(() => (
+  <div className="flex items-center gap-1.5 p-1.5 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 will-change-transform">
     {[Plane, Clock, Package, Globe].map((Icon, i) => (
       <div key={i} className="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer">
         <Icon size={12} />
       </div>
     ))}
   </div>
-);
+));
 
-const LocationCard = () => (
-  <div className="flex items-center gap-2.5 p-2 px-3 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50">
+const LocationCard = React.memo(() => (
+  <div className="flex items-center gap-2.5 p-2 px-3 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 will-change-transform">
     <div className="w-6 h-6 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
       <MapPin size={12} />
     </div>
     <span className="text-[10px] font-black text-slate-700 uppercase tracking-tighter">London, UK</span>
   </div>
-);
+));
 
-const ActionPills = () => (
-  <div className="flex flex-col gap-1.5 p-1.5 bg-white/90 backdrop-blur-xl border border-white/50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50">
+const ActionPills = React.memo(() => (
+  <div className="flex flex-col gap-1.5 p-1.5 bg-white/90 backdrop-blur-xl border border-white/50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 will-change-transform">
     <button className="px-5 py-2 bg-indigo-600 rounded-2xl text-[9px] font-black text-white uppercase tracking-widest shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all">Send</button>
     <button className="px-5 py-2 bg-slate-50 rounded-2xl text-[9px] font-black text-slate-400 uppercase tracking-widest border border-slate-100">Cancel</button>
   </div>
-);
+));
 
-const DeliveryTimeline = () => (
-  <div className="flex flex-col gap-2.5 p-3 px-4 bg-white/90 backdrop-blur-xl border border-white/50 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 min-w-[140px]">
+const DeliveryTimeline = React.memo(() => (
+  <div className="flex flex-col gap-2.5 p-3 px-4 bg-white/90 backdrop-blur-xl border border-white/50 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 min-w-[140px] will-change-transform">
     <span className="text-[9px] font-black text-indigo-600 uppercase tracking-widest border-b border-indigo-50 pb-1.5 mb-0.5">Live Tracking</span>
     {[
       { label: 'City Hub', time: '12:00 PM', done: true },
@@ -61,10 +61,10 @@ const DeliveryTimeline = () => (
       </div>
     ))}
   </div>
-);
+));
 
-const MiniControls = () => (
-   <div className="flex gap-1.5 p-1 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50">
+const MiniControls = React.memo(() => (
+   <div className="flex gap-1.5 p-1 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50 will-change-transform">
       <button 
         aria-label="Previous"
         className="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
@@ -78,22 +78,22 @@ const MiniControls = () => (
          <ChevronRight size={14} />
       </button>
    </div>
-);
+));
 
-const HangingIcon = ({ icon: Icon, color = "indigo" }: { icon: any, color?: string }) => (
-  <div className={`w-10 h-10 rounded-2xl bg-white/90 backdrop-blur-xl border border-white/50 flex items-center justify-center shadow-lg ring-1 ring-slate-200/50 text-${color}-600`}>
+const HangingIcon = React.memo(({ icon: Icon, color = "indigo" }: { icon: any, color?: string }) => (
+  <div className={`w-10 h-10 rounded-2xl bg-white/90 backdrop-blur-xl border border-white/50 flex items-center justify-center shadow-lg ring-1 ring-slate-200/50 text-${color}-600 will-change-transform`}>
     <Icon size={18} />
   </div>
-);
+));
 
-const Tag = ({ label, active = false }: { label: string; active?: boolean }) => (
+const Tag = React.memo(({ label, active = false }: { label: string; active?: boolean }) => (
   <div className="flex items-center gap-2 px-4 py-2 bg-white/50 backdrop-blur-lg border border-white/30 rounded-full shadow-sm">
     <div className={`w-1.5 h-1.5 rounded-full ${active ? 'bg-indigo-500 animate-pulse' : 'bg-slate-300'}`} />
     <span className="text-[9px] font-black uppercase tracking-[0.15em] text-slate-700">
       {label}
     </span>
   </div>
-);
+));
 
 const floatingElements = [
   { 
@@ -163,64 +163,64 @@ const floatingElements = [
 ];
 
 
+const FloatingItem = React.memo(({ el, isMobile, mouseX, mouseY }: { el: any, isMobile: boolean, mouseX: any, mouseY: any }) => {
+  const leftPos = isMobile ? el.position.mobileLeft : el.position.left;
+  const topPos = isMobile ? el.position.mobileTop : el.position.top;
+  
+  // Optimized: Lower magnitude for parallax to maintain 120fps performance
+  const xParallax = useTransform(mouseX, [-0.5, 0.5], [-15 * el.depth, 15 * el.depth]);
+  const yParallax = useTransform(mouseY, [-0.5, 0.5], [-15 * el.depth, 15 * el.depth]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ 
+        opacity: 1, 
+        scale: isMobile ? 0.75 : (0.9 + (el.depth - 0.7) * 0.15),
+        x: [0, 8 * el.depth, -8 * el.depth, 0],
+        y: [0, -12 * el.depth, 8 * el.depth, 0],
+      }}
+      transition={{ 
+        opacity: { duration: 0.8, delay: el.delay },
+        scale: { duration: 0.8, delay: el.delay },
+        x: { duration: 10 + el.delay * 5, repeat: Infinity, ease: "linear" },
+        y: { duration: 12 + el.delay * 5, repeat: Infinity, ease: "linear" },
+      }}
+      style={{ 
+        left: leftPos, 
+        top: topPos,
+        translateX: xParallax,
+        translateY: yParallax,
+        // Removed dynamic blur filter for butery smoothness on high refresh rate displays
+        willChange: "transform, opacity"
+      }}
+      className="absolute flex flex-col items-center group pointer-events-auto cursor-grab active:cursor-grabbing"
+    >
+      <motion.div
+        whileHover={{ scale: 1.03 }}
+        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+      >
+        {el.content}
+      </motion.div>
+    </motion.div>
+  );
+});
+
 const FloatingUI = ({ mouseX, mouseY }: { mouseX: any, mouseY: any }) => {
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1440);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
-  const isMobile = windowWidth < 768;
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
       {floatingElements.map((el) => {
         if (isMobile && !el.showOnMobile) return null;
-        const leftPos = isMobile ? el.position.mobileLeft : el.position.left;
-        const topPos = isMobile ? el.position.mobileTop : el.position.top;
-        
-        // Multi-layered parallax based on depth
-        const xParallax = useTransform(mouseX, [-0.5, 0.5], [-25 * el.depth, 25 * el.depth]);
-        const yParallax = useTransform(mouseY, [-0.5, 0.5], [-25 * el.depth, 25 * el.depth]);
-        
-        return (
-          <motion.div
-            key={el.id}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
-              opacity: 1, 
-              scale: isMobile ? 0.75 : (0.9 + (el.depth - 0.7) * 0.2),
-              x: [0, 10 * el.depth, -10 * el.depth, 0],
-              y: [0, -15 * el.depth, 10 * el.depth, 0],
-              rotate: [-2 * el.depth, 2 * el.depth, -2 * el.depth]
-            }}
-            transition={{ 
-              opacity: { duration: 1, delay: el.delay },
-              scale: { duration: 1, delay: el.delay },
-              x: { duration: 8 + el.delay * 5, repeat: Infinity, ease: "easeInOut" },
-              y: { duration: 10 + el.delay * 5, repeat: Infinity, ease: "easeInOut" },
-              rotate: { duration: 12 + el.delay * 5, repeat: Infinity, ease: "easeInOut" }
-            }}
-            style={{ 
-              left: leftPos, 
-              top: topPos,
-              translateX: xParallax,
-              translateY: yParallax,
-              filter: `blur(${(el.depth - 1) * 2}px)`
-            }}
-            className="absolute flex flex-col items-center group pointer-events-auto cursor-grab active:cursor-grabbing"
-          >
-            {/* Suspended card with Dynamic Physics */}
-            <motion.div
-              whileHover={{ scale: 1.05, filter: 'brightness(1.05)' }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              {el.content}
-            </motion.div>
-          </motion.div>
-        );
+        return <FloatingItem key={el.id} el={el} isMobile={isMobile} mouseX={mouseX} mouseY={mouseY} />;
       })}
     </div>
   );
@@ -265,11 +265,16 @@ const Hero = () => {
       const minutes = Math.floor((difference / 1000 / 60) % 60);
       const seconds = Math.floor((difference / 1000) % 60);
 
-      setTimeLeft({
-        days: days.toString().padStart(2, '0'),
-        hours: hours.toString().padStart(2, '0'),
-        minutes: minutes.toString().padStart(2, '0'),
-        seconds: seconds.toString().padStart(2, '0')
+      const s = seconds.toString().padStart(2, '0');
+      
+      setTimeLeft(prev => {
+        if (prev.seconds === s) return prev;
+        return {
+          days: days.toString().padStart(2, '0'),
+          hours: hours.toString().padStart(2, '0'),
+          minutes: minutes.toString().padStart(2, '0'),
+          seconds: s
+        };
       });
     } else {
       setTimeLeft({ days: '00', hours: '00', minutes: '00', seconds: '00' });
@@ -287,7 +292,7 @@ const Hero = () => {
       mouseX.set(e.clientX / window.innerWidth - 0.5);
       mouseY.set(e.clientY / window.innerHeight - 0.5);
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
@@ -298,20 +303,18 @@ const Hero = () => {
     >
       <InteractiveBackground />
 
-      {/* ── Ambient neon orbits ── */}
+      {/* ── Ambient static orbits ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <svg className="w-full h-full opacity-[0.4]" viewBox="0 0 1440 900">
-          <motion.ellipse
+        <svg className="w-full h-full opacity-[0.3]" viewBox="0 0 1440 900">
+          <ellipse
             cx="720" cy="450" rx="900" ry="250"
             stroke="#6366F1" strokeWidth="0.5" fill="none"
-            animate={{ rx: [900, 920, 900], ry: [250, 260, 250], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+            className="opacity-30"
           />
-          <motion.ellipse
+          <ellipse
             cx="720" cy="450" rx="600" ry="180"
             stroke="#6366F1" strokeWidth="0.5" fill="none"
-            animate={{ rx: [600, 580, 600], ry: [180, 190, 180], opacity: [0.2, 0.4, 0.2] }}
-            transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+            className="opacity-20"
           />
         </svg>
       </div>
@@ -376,7 +379,7 @@ const Hero = () => {
         >
           <div className="flex flex-col items-center gap-3">
             <span className="text-[10px] font-extrabold uppercase tracking-[0.35em] text-indigo-600">
-              The Future of Web Design
+              Presented by DESIGN CLUB
             </span>
           </div>
         </motion.div>
@@ -389,7 +392,7 @@ const Hero = () => {
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center"
           >
-            <h1 className="text-6xl sm:text-7xl md:text-[100px] lg:text-[130px] font-black leading-[0.9] tracking-tighter text-slate-900">
+            <h1 className="text-6xl sm:text-7xl md:text-[100px] lg:text-[130px] font-black leading-[0.95] tracking-tight text-slate-900">
               <span className="block">DESIGN</span>
               <span className="block mt-[-0.02em]">
                 <span className="bg-gradient-to-r from-indigo-500 via-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
@@ -423,7 +426,7 @@ const Hero = () => {
           className="flex flex-col items-center group/cta"
         >
           {/* Central tether line */}
-          <div className="w-[1px] h-12 bg-gradient-to-b from-sky-400/0 via-sky-400/40 to-sky-400/60 mb-[-1px] opacity-[0.5]" />
+          <div className="w-[1px] h-12 bg-gradient-to-b from-indigo-400/0 via-indigo-400/40 to-indigo-400/60 mb-[-1px] opacity-[0.5]" />
 
           <motion.div 
             animate={{ rotate: [-0.3, 0.3, -0.3], y: [0, 5, 0] }}
@@ -439,14 +442,14 @@ const Hero = () => {
               <span className="relative z-10 flex items-center gap-3">
                 Join Challenge <Rocket size={16} className="text-indigo-400 group-hover:translate-x-1 transition-transform" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-sky-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
             </motion.button>
 
             <motion.button
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
               whileHover={{ scale: 1.04, y: -2, rotate: -1 }}
               whileTap={{ scale: 0.96 }}
-              className="group relative px-12 py-4.5 rounded-2xl bg-white text-slate-900 font-black uppercase tracking-[0.3em] overflow-hidden shadow-[0_20px_40px_-12px_rgba(14,165,233,0.1)] hover:shadow-sky-500/20 transition-all text-xs border border-slate-200"
+              className="group relative px-12 py-4.5 rounded-2xl bg-white text-slate-900 font-black uppercase tracking-[0.3em] overflow-hidden shadow-[0_20px_40px_-12px_rgba(99,102,241,0.1)] hover:shadow-indigo-500/20 transition-all text-xs border border-slate-200"
             >
               <span className="relative z-10">Explore Event</span>
               <div className="absolute inset-0 bg-slate-50 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -455,7 +458,7 @@ const Hero = () => {
 
           {/* ── Suspended Countdown Board ── */}
           <div className="flex flex-col items-center">
-            <div className="w-[1.5px] h-8 bg-sky-200/50 mb-[-1px]" />
+            <div className="w-[1.5px] h-8 bg-indigo-200/50 mb-[-1px]" />
             <motion.div 
               animate={{ rotate: [0.5, -0.5, 0.5], y: [0, 8, 0] }}
               transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
@@ -489,10 +492,10 @@ const Hero = () => {
         className="absolute bottom-8 flex flex-col items-center gap-3 group cursor-pointer z-10"
         onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
       >
-        <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-slate-400 group-hover:text-sky-500 transition-colors">
+        <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-slate-400 group-hover:text-indigo-500 transition-colors">
           Explore
         </span>
-        <div className="w-6 h-10 rounded-full border-2 border-slate-200/60 p-1 flex justify-center group-hover:border-sky-300 transition-colors">
+        <div className="w-6 h-10 rounded-full border-2 border-slate-200/60 p-1 flex justify-center group-hover:border-indigo-300 transition-colors">
           <motion.div
             animate={{ y: [0, 14, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}

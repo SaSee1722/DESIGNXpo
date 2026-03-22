@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronRight } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 
 const navItems = [
   { name: 'About', href: '#about' },
@@ -24,6 +25,51 @@ const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
+  const [participantCount, setParticipantCount] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const { count, error, status } = await supabase
+          .from('registrations')
+          .select('id', { count: 'exact', head: true });
+        
+        if (error) {
+          console.error('Nav Count Error:', error.message, 'Status:', status);
+          return;
+        }
+
+        if (count !== null) {
+          setParticipantCount(count);
+        }
+      } catch (err) {
+        console.error('Error fetching count in Nav:', err);
+      }
+    };
+
+    fetchCount();
+
+    // Set up robust real-time subscription
+    // IMPORTANT: Table must have Realtime enabled in Supabase Dashboard
+    const subscription = supabase
+      .channel('nav_realtime_count')
+      .on('postgres_changes', { 
+        event: '*', 
+        schema: 'public', 
+        table: 'registrations' 
+      }, () => {
+        console.log('Realtime change detected, updating count...');
+        fetchCount();
+      })
+      .subscribe((status) => {
+        console.log('Nav subscription status:', status);
+      });
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,26 +79,35 @@ const Nav = () => {
   }, []);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isScrolled = window.scrollY > 20;
+          setScrolled(isScrolled);
 
-      // Simple active section logic
-      const sections = navItems.map(item => item.href.substring(1));
-      const scrollPos = window.scrollY + 100;
+          // Simple active section logic
+          const sections = navItems.map(item => item.href.substring(1));
+          const scrollPos = window.scrollY + 100;
 
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
-            setActiveSection(sectionId);
-            break;
+          for (const sectionId of sections) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+              const { offsetTop, offsetHeight } = element;
+              if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+                setActiveSection(sectionId);
+                break;
+              }
+            }
           }
-        }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -63,7 +118,7 @@ const Nav = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 px-8 py-4 flex justify-between items-center m-4 md:m-6 rounded-[2.5rem] border border-white/40 shadow-2xl backdrop-blur-2xl transition-all duration-500 ${
-          scrolled ? "bg-white/70 py-3 shadow-sky-500/5 translate-y-[-4px]" : "bg-white/40"
+          scrolled ? "bg-white/70 py-3 shadow-indigo-500/5 translate-y-[-4px]" : "bg-white/40"
         }`}
       >
         <div className="flex items-center gap-12">
@@ -77,8 +132,11 @@ const Nav = () => {
               <div className="absolute top-0 -left-full w-full h-full bg-white/20 skew-x-[-20deg] group-hover:left-[200%] transition-all duration-[800ms] pointer-events-none" />
             </motion.div>
             <div className="flex flex-col">
-              <span className="text-2xl font-black text-slate-900 tracking-tighter leading-none italic">
+              <span className="text-2xl font-black text-slate-900 tracking-tighter leading-none italic uppercase">
                 DESIGN<span className="text-indigo-600">XPO</span>
+              </span>
+              <span className="text-[10px] font-black tracking-[0.2em] text-slate-400 mt-0.5 ml-0.5">
+                BY DESIGN CLUB
               </span>
             </div>
           </Link>
@@ -125,8 +183,15 @@ const Nav = () => {
           
           <div className="flex items-center gap-5">
             <div className="hidden md:flex items-center gap-3 pr-4 border-r border-slate-100">
-               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-               <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">System Ready</span>
+              <button 
+                onClick={() => navigate('/admin')}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-slate-50 transition-all group"
+              >
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-900 transition-colors">
+                  Admin Panel
+                </span>
+              </button>
             </div>
 
             <Link 
@@ -160,7 +225,7 @@ const Nav = () => {
               animate={{ scale: 1 }}
               className="bg-white/90 backdrop-blur-2xl rounded-3xl border border-white/40 shadow-2xl p-6 overflow-hidden relative"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-100/50 blur-3xl -z-10 rounded-full" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 blur-3xl -z-10 rounded-full" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-100/50 blur-3xl -z-10 rounded-full" />
               
               <div className="flex flex-col gap-2">
@@ -175,7 +240,7 @@ const Nav = () => {
                     className="flex items-center justify-between p-4 rounded-2xl hover:bg-slate-50 transition-colors group"
                   >
                     <span className="text-lg font-bold text-slate-700">{item.name}</span>
-                    <ChevronRight size={18} className="text-slate-400 group-hover:text-sky-500 transition-colors" />
+                    <ChevronRight size={18} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />
                   </motion.a>
                 ))}
               </div>
@@ -183,7 +248,9 @@ const Nav = () => {
               <div className="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-indigo-600">Event Live Now</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-indigo-600">
+                    {participantCount > 0 ? `${participantCount} Participants` : 'System Ready'}
+                  </span>
                 </div>
                 <button 
                   onClick={() => {

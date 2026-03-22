@@ -5,17 +5,17 @@ const ProcessStep = ({ number, title, description, icon, isLast }: { number: str
   <div className="relative">
     <div className="flex items-start gap-8 mb-16 relative">
       <div className="flex-shrink-0 relative z-20">
-        <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-sky-400 font-bold text-xl group hover:border-sky-500 transition-colors shadow-lg shadow-sky-500/10">
+        <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-indigo-400 font-bold text-xl group hover:border-indigo-500 transition-colors shadow-lg shadow-indigo-500/10">
           {icon}
         </div>
       </div>
       <div className="flex-grow pt-2">
-        <span className="text-sky-500 font-bold text-sm tracking-widest uppercase mb-2 block">{number}</span>
+        <span className="text-indigo-500 font-bold text-sm tracking-widest uppercase mb-2 block">{number}</span>
         <h3 className="text-2xl font-bold text-slate-900 mb-4">{title}</h3>
         <p className="text-slate-600 leading-relaxed max-w-xl">{description}</p>
       </div>
       {!isLast && (
-        <div className="absolute left-[31px] top-16 w-[2px] h-[calc(100%+64px)] bg-gradient-to-b from-sky-400/50 via-slate-200 to-transparent -z-10" />
+        <div className="absolute left-[31px] top-16 w-[2px] h-[calc(100%+64px)] bg-gradient-to-b from-indigo-400/50 via-slate-200 to-transparent -z-10" />
       )}
     </div>
   </div>
@@ -31,11 +31,11 @@ const ProcessSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-20"
         >
-          <div className="inline-block px-4 py-2 bg-sky-50 text-sky-600 rounded-full text-sm font-semibold mb-6 tracking-wide">
+          <div className="inline-block px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-sm font-semibold mb-6 tracking-wide">
             Our Methodology
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-            The <span className="text-sky-600">Science</span> of Connection
+            The <span className="text-indigo-600">Science</span> of Connection
           </h2>
           <p className="text-slate-600 text-lg">
             We've developed a unique framework for bridging the gap between digital and physical spaces through advanced spatial intelligence.

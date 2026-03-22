@@ -22,7 +22,7 @@ const SuccessCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     whileHover={{ y: -10 }}
-    className="group relative glass rounded-[2.5rem] overflow-hidden border border-sky-100/50 hover:border-sky-400/30 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-sky-200/20"
+    className="group relative glass rounded-[2.5rem] overflow-hidden border border-indigo-100/50 hover:border-indigo-400/30 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-indigo-200/20"
   >
     <div className="aspect-[16/10] overflow-hidden relative">
       <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -32,7 +32,7 @@ const SuccessCard = ({
         </button>
       </div>
       <div className="absolute top-6 left-6 flex gap-2">
-        <span className="px-4 py-1.5 rounded-full glass-dark text-[10px] font-black uppercase tracking-widest text-sky-400 border border-white/10 backdrop-blur-md">
+        <span className="px-4 py-1.5 rounded-full glass-dark text-[10px] font-black uppercase tracking-widest text-indigo-400 border border-white/10 backdrop-blur-md">
           {year}
         </span>
       </div>
@@ -41,13 +41,13 @@ const SuccessCard = ({
     <div className="p-8">
       <div className="flex flex-wrap gap-2 mb-4">
         {tags.map((tag, i) => (
-          <span key={i} className="text-[10px] font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md uppercase tracking-wider">
+          <span key={i} className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md uppercase tracking-wider">
             {tag}
           </span>
         ))}
       </div>
       
-      <h3 className="text-2xl font-black text-slate-900 mb-3 tracking-tight group-hover:text-sky-600 transition-colors">
+      <h3 className="text-2xl font-black text-slate-900 mb-3 tracking-tight group-hover:text-indigo-600 transition-colors">
         {title}
       </h3>
       
@@ -108,9 +108,9 @@ const PastSuccesses = () => {
     <section id="past-successes" className="py-24 px-6 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
         <div className="max-w-2xl">
-          <span className="text-sky-500 font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Archive</span>
+          <span className="text-indigo-500 font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Archive</span>
           <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 leading-tight">
-            Hall of <span className="text-sky-600 italic">Winners</span>
+            Hall of <span className="text-indigo-600 italic">Winners</span>
           </h2>
           <p className="text-slate-500 mt-6 text-lg leading-relaxed">
             Take inspiration from the legendary designs that pushed the boundaries in our previous editions.
@@ -118,11 +118,11 @@ const PastSuccesses = () => {
         </div>
         
         <div className="flex gap-4">
-          <div className="flex flex-col items-center glass px-6 py-4 rounded-3xl border border-sky-100 shadow-sm">
-            <span className="text-2xl font-black text-sky-600">120+</span>
+          <div className="flex flex-col items-center glass px-6 py-4 rounded-3xl border border-indigo-100 shadow-sm">
+            <span className="text-2xl font-black text-indigo-600">120+</span>
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Teams Competed</span>
           </div>
-          <div className="flex flex-col items-center glass px-6 py-4 rounded-3xl border border-sky-100 shadow-sm">
+          <div className="flex flex-col items-center glass px-6 py-4 rounded-3xl border border-indigo-100 shadow-sm">
             <span className="text-2xl font-black text-indigo-600">45k+</span>
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Grand Prizes</span>
           </div>
@@ -139,9 +139,9 @@ const PastSuccesses = () => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="mt-20 p-12 glass rounded-[3rem] border border-sky-100/50 bg-gradient-to-br from-white/80 to-sky-50/50 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden relative"
+        className="mt-20 p-12 glass rounded-[3rem] border border-indigo-100/50 bg-gradient-to-br from-white/80 to-indigo-50/50 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden relative"
       >
-        <div className="absolute top-0 right-0 w-64 h-64 bg-sky-200/20 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-200/20 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
         
         <div className="relative z-10 max-w-xl">
           <div className="flex gap-2 mb-6">
@@ -153,11 +153,11 @@ const PastSuccesses = () => {
 
         <div className="relative z-10 flex -space-x-4">
           {[1,2,3,4].map(i => (
-            <div key={i} className="w-16 h-16 rounded-full border-4 border-white shadow-xl bg-gradient-to-br from-sky-400 to-indigo-500 overflow-hidden">
+            <div key={i} className="w-16 h-16 rounded-full border-4 border-white shadow-xl bg-gradient-to-br from-indigo-400 to-indigo-600 overflow-hidden">
                 <img src={`https://i.pravatar.cc/150?u=${i}`} alt="Avatar" className="w-full h-full object-cover" />
             </div>
           ))}
-          <div className="w-16 h-16 rounded-full border-4 border-white shadow-xl bg-slate-900 flex items-center justify-center text-white font-bold text-xs ring-2 ring-sky-500">
+          <div className="w-16 h-16 rounded-full border-4 border-white shadow-xl bg-slate-900 flex items-center justify-center text-white font-bold text-xs ring-2 ring-indigo-500">
             +50
           </div>
         </div>

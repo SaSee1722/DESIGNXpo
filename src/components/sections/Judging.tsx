@@ -15,7 +15,7 @@ const Judging = () => {
 
   return (
     <section id="judging" className="py-24 px-6 bg-white overflow-hidden relative">
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.05),transparent)]" />
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.05),transparent)]" />
       <div className="max-w-7xl mx-auto relative z-10">
         <SectionTitle subtitle="Evaluation" title="Judging Criteria" />
         
@@ -30,12 +30,12 @@ const Judging = () => {
             <motion.div 
               key={i}
               variants={itemVariants}
-              className="p-8 rounded-[2.5rem] bg-slate-50/50 border border-sky-100 hover:border-sky-500/50 transition-all group hover:bg-white hover:shadow-2xl hover:shadow-sky-100/50"
+              className="p-8 rounded-[2.5rem] bg-slate-50/50 border border-indigo-100 hover:border-indigo-500/50 transition-all group hover:bg-white hover:shadow-2xl hover:shadow-indigo-100/50"
             >
-              <div className="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-600 mb-6 group-hover:bg-sky-500 group-hover:text-white transition-all duration-300 shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-100 flex items-center justify-center text-indigo-600 mb-6 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300 shadow-sm">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-sky-600 transition-colors">{item.title}</h3>
+              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-indigo-600 transition-colors">{item.title}</h3>
               <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}

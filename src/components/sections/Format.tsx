@@ -22,13 +22,13 @@ const Format = () => (
           <motion.div 
             key={i}
             variants={itemVariants}
-            className="flex gap-6 p-8 glass rounded-3xl border border-sky-100 relative group hover:bg-white hover:shadow-2xl hover:shadow-sky-100 transition-all duration-500"
+            className="flex gap-6 p-8 glass rounded-3xl border border-indigo-100 relative group hover:bg-white hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-500"
           >
-            <div className="absolute -top-4 -left-4 w-12 h-12 bg-sky-600 text-white rounded-xl flex items-center justify-center font-black text-xl shadow-lg ring-4 ring-white group-hover:scale-110 group-hover:bg-indigo-600 transition-all">
+            <div className="absolute -top-4 -left-4 w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-black text-xl shadow-lg ring-4 ring-white group-hover:scale-110 group-hover:bg-indigo-700 transition-all">
               {step.number}
             </div>
             <div className="mt-2">
-              <h3 className="text-xl font-bold mb-2 text-slate-800 group-hover:text-sky-600 transition-colors">{step.title}</h3>
+              <h3 className="text-xl font-bold mb-2 text-slate-800 group-hover:text-indigo-600 transition-colors uppercase italic font-black">{step.title}</h3>
               <p className="text-slate-500 text-sm">{step.desc}</p>
             </div>
           </motion.div>

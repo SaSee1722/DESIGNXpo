@@ -82,7 +82,7 @@ const FloatingParticles = ({ count = 50 }) => {
       </bufferGeometry>
       <pointsMaterial 
         size={0.15} 
-        color="#bae6fd" 
+        color="#c7d2fe" 
         transparent 
         opacity={0.4} 
         sizeAttenuation 
@@ -95,39 +95,39 @@ const FloatingParticles = ({ count = 50 }) => {
 const UIComponents = [
   // 01. Minimalist Action
   <div className="group p-4">
-    <button className="relative px-12 py-5 rounded-full bg-slate-900/90 text-white font-black text-[10px] tracking-[0.4em] uppercase border border-white/10 backdrop-blur-xl shadow-2xl group-hover:bg-sky-600 transition-all duration-500">
+    <button className="relative px-12 py-5 rounded-full bg-slate-900/90 text-white font-black text-[10px] tracking-[0.4em] uppercase border border-white/10 backdrop-blur-xl shadow-2xl group-hover:bg-indigo-600 transition-all duration-500">
       Launch Core
     </button>
   </div>,
 
   // 02. Simple Stat
-  <div className="px-10 py-6 rounded-[2rem] bg-white/80 backdrop-blur-2xl border border-sky-100/50 shadow-xl flex flex-col items-center">
-    <span className="text-[9px] font-black text-sky-500 uppercase tracking-[0.3em] mb-2">System Load</span>
+  <div className="px-10 py-6 rounded-[2rem] bg-white/80 backdrop-blur-2xl border border-indigo-100/50 shadow-xl flex flex-col items-center">
+    <span className="text-[9px] font-black text-indigo-500 uppercase tracking-[0.3em] mb-2">System Load</span>
     <span className="text-3xl font-black text-slate-900 tracking-tighter">24<span className="text-sm opacity-30 ml-1">%</span></span>
   </div>,
 
   // 03. Icon Circle
-  <div className="w-20 h-20 rounded-full bg-slate-900 flex items-center justify-center text-sky-400 border border-white/10 shadow-2xl group cursor-pointer">
+  <div className="w-20 h-20 rounded-full bg-slate-900 flex items-center justify-center text-indigo-400 border border-white/10 shadow-2xl group cursor-pointer">
     <Layers className="w-8 h-8 group-hover:scale-110 transition-transform" />
   </div>,
 
   // 04. Minimal User
   <div className="flex items-center gap-4 px-6 py-3 rounded-full bg-white/90 backdrop-blur-md border border-slate-100 shadow-lg">
-    <div className="w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center text-white">
+    <div className="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white">
       <User size={20} />
     </div>
     <span className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Operator</span>
   </div>,
 
   // 05. Command Chip
-  <div className="px-8 py-4 rounded-2xl bg-slate-900 text-sky-400 border border-white/5 shadow-2xl font-mono text-[10px] tracking-tighter uppercase group cursor-pointer">
+  <div className="px-8 py-4 rounded-2xl bg-slate-900 text-indigo-400 border border-white/5 shadow-2xl font-mono text-[10px] tracking-tighter uppercase group cursor-pointer">
     <span className="opacity-40 mr-2">SYS:</span>
     <span className="group-hover:text-white transition-colors">ESTABLISH_LINK</span>
   </div>,
 
   // 06. Pulse Activity
   <div className="p-6 rounded-3xl bg-white/40 backdrop-blur-3xl border border-white/20 shadow-2xl">
-    <Activity className="w-8 h-8 text-sky-500 animate-pulse" />
+    <Activity className="w-8 h-8 text-indigo-500 animate-pulse" />
   </div>
 ];
 
@@ -179,13 +179,13 @@ const RingContent = ({ dragState }: { dragState: React.MutableRefObject<{ isDrag
       {/* Dynamic central grid/light */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
         <ringGeometry args={[radius * 0.95, radius * 1.05, 128]} />
-        <meshBasicMaterial color="#3b82f6" transparent opacity={0.03} side={THREE.DoubleSide} />
+        <meshBasicMaterial color="#6366f1" transparent opacity={0.03} side={THREE.DoubleSide} />
       </mesh>
       
       {/* Decorative outer wireframe ring */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
         <ringGeometry args={[radius * 1.2, radius * 1.202, 128]} />
-        <meshBasicMaterial color="#3b82f6" transparent opacity={0.1} side={THREE.DoubleSide} />
+        <meshBasicMaterial color="#6366f1" transparent opacity={0.1} side={THREE.DoubleSide} />
       </mesh>
     </group>
   );
@@ -232,7 +232,7 @@ const RotatingRing: React.FC = () => {
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-transparent pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent pointer-events-none z-0" />
       <Canvas 
         camera={{ position: [0, 8, 40], fov: 32 }}
         dpr={[1, 2]}

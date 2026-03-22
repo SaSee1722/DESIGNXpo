@@ -23,8 +23,8 @@ const About = () => (
             { label: 'UI/UX Design', icon: <Layout className="w-5 h-5" /> },
             { label: 'Web Development', icon: <Code className="w-5 h-5" /> }
           ].map((item, i) => (
-            <motion.div key={i} variants={itemVariants} className="flex items-center gap-3 p-4 glass rounded-2xl border border-sky-50 hover:bg-white hover:shadow-xl hover:shadow-sky-100 transition-all cursor-default">
-              <div className="text-sky-500">{item.icon}</div>
+            <motion.div key={i} variants={itemVariants} className="flex items-center gap-3 p-4 glass rounded-2xl border border-indigo-50 hover:bg-white hover:shadow-xl hover:shadow-indigo-100 transition-all cursor-default">
+              <div className="text-indigo-500">{item.icon}</div>
               <span className="font-bold text-slate-700">{item.label}</span>
             </motion.div>
           ))}
@@ -37,7 +37,7 @@ const About = () => (
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="rounded-[2.5rem] overflow-hidden shadow-2xl shadow-sky-100 relative z-20 h-[80%] group self-start border-4 border-white"
+            className="rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-100 relative z-20 h-[80%] group self-start border-4 border-white"
           >
             <img 
               src="/assets/workspace.png" 
@@ -45,7 +45,7 @@ const About = () => (
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-sky-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+            <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
               <span className="text-white font-bold text-xs tracking-widest uppercase">UX Interface</span>
             </div>
           </motion.div>
@@ -54,7 +54,7 @@ const About = () => (
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="rounded-[2.5rem] overflow-hidden shadow-2xl shadow-sky-100 relative z-10 h-[80%] mt-auto group border-4 border-white"
+            className="rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-100 relative z-10 h-[80%] mt-auto group border-4 border-white"
           >
             <img 
               src="/assets/prototyping.png" 
@@ -67,7 +67,7 @@ const About = () => (
             </div>
           </motion.div>
         </div>
-        <div className="absolute -top-10 -right-10 w-64 h-64 bg-sky-100 rounded-full blur-[80px] opacity-40 animate-pulse" />
+        <div className="absolute -top-10 -right-10 w-64 h-64 bg-indigo-100 rounded-full blur-[80px] opacity-40 animate-pulse" />
         <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-indigo-100 rounded-full blur-[80px] opacity-40 animate-pulse" />
       </div>
     </div>
