@@ -26,7 +26,7 @@ const Details = () => (
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {[
-            { name: 'VIDHARSHANA SHREE R', dept: 'II CSE B', image: '/vidharshana_profile.jpg' },
+            { name: 'VIDHARSHANA SREE R', dept: 'II CSE B', image: '/vidharshana_profile.jpg' },
             { name: 'MUTHUSELVAN SP', dept: 'II CSE B', image: '/muthuselvan_profile.jpg' }
           ].map((item, i) => (
             <motion.div 
@@ -124,7 +124,7 @@ const Details = () => (
             
             <h4 className="text-2xl md:text-3xl font-black text-slate-900 mb-2 tracking-tighter uppercase italic">SALABADESHWARAN S</h4>
             <p className="text-sm text-slate-500 font-bold uppercase tracking-[0.5em] mb-1">II CSE B • DESIGN XPO • VIBECODER</p>
-            <p className="text-[10px] text-indigo-600 font-extrabold uppercase tracking-widest mb-6">SHREE SAKTHI ENGINEERING COLLEGE - KARAMADAI</p>
+            <p className="text-[10px] text-indigo-600 font-extrabold uppercase tracking-widest mb-6">SREE SAKTHI ENGINEERING COLLEGE - KARAMADAI</p>
             
             <p className="text-slate-600 text-sm font-medium leading-relaxed max-w-2xl mb-8 mx-auto md:mx-0">
               Responsible for the technical architecture and seamless delivery of DesignXpo 1.0. 
