@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabase';
 const Registration = () => {
     const navigate = useNavigate();
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [regType, setRegType] = useState<'solo' | 'team'>('team');
     const [formData, setFormData] = useState({
         teamName: '',
         department: '',
@@ -22,10 +23,10 @@ const Registration = () => {
             const { error } = await supabase
                 .from('registrations')
                 .insert([{
-                    team_name: formData.teamName,
+                    team_name: regType === 'team' ? formData.teamName : 'SOLO',
                     department: formData.department,
                     candidate_a: formData.candidateA,
-                    candidate_b: formData.candidateB,
+                    candidate_b: regType === 'team' ? formData.candidateB : {},
                     transaction_id: formData.transactionId,
                     created_at: new Date().toISOString()
                 }]);
@@ -91,6 +92,7 @@ const Registration = () => {
         <div className="min-h-screen bg-slate-50 selection:bg-indigo-500/30 font-inter py-12 px-6">
             <div className="max-w-4xl mx-auto">
                 <button 
+                    type="button"
                     onClick={() => navigate('/')}
                     className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors mb-12 group text-[10px] font-black uppercase tracking-widest"
                 >
@@ -98,31 +100,52 @@ const Registration = () => {
                     Back to Event
                 </button>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Form Side */}
                     <motion.div 
                         initial={{ x: -20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                     >
                         <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tighter uppercase italic">Registration</h1>
-                        <p className="text-slate-500 mb-10 text-sm font-medium">Secure your spot at DesignXpo 1.0 by DESIGN CLUB</p>
+                        <p className="text-slate-500 mb-8 text-sm font-medium">Secure your spot at DesignXpo 1.0 by DESIGN CLUB</p>
 
-                        <form onSubmit={handleSubmit} className="space-y-8">
+                        <div className="flex bg-slate-100 p-1.5 rounded-2xl mb-10 w-fit">
+                            <button 
+                                type="button"
+                                onClick={() => setRegType('solo')}
+                                className={`px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${regType === 'solo' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                            >
+                                Solo
+                            </button>
+                            <button 
+                                type="button"
+                                onClick={() => setRegType('team')}
+                                className={`px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${regType === 'team' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                            >
+                                Team (2)
+                            </button>
+                        </div>
+
+                        <div className="space-y-8">
                             {/* Team Info */}
                             <div className="space-y-4">
-                                <h3 className="text-indigo-600 font-black uppercase text-[10px] tracking-[0.2em]">Team Identity</h3>
+                                <h3 className="text-indigo-600 font-black uppercase text-[10px] tracking-[0.2em]">
+                                    {regType === 'team' ? 'Team Identity' : 'Institutional Details'}
+                                </h3>
                                 <div className="space-y-4">
-                                    <div className="relative group">
-                                        <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
-                                        <input 
-                                            required
-                                            type="text"
-                                            placeholder="Team Name"
-                                            value={formData.teamName}
-                                            onChange={(e) => handleInputChange('teamName', e.target.value)}
-                                            className="w-full bg-white border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm font-medium"
-                                        />
-                                    </div>
+                                    {regType === 'team' && (
+                                        <div className="relative group">
+                                            <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                            <input 
+                                                required
+                                                type="text"
+                                                placeholder="Team Name"
+                                                value={formData.teamName}
+                                                onChange={(e) => handleInputChange('teamName', e.target.value)}
+                                                className="w-full bg-white border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm font-medium"
+                                            />
+                                        </div>
+                                    )}
                                     <div className="relative group">
                                         <Building className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
                                         <input 
@@ -139,7 +162,9 @@ const Registration = () => {
 
                             {/* Candidate A */}
                             <div className="space-y-4 pt-4 border-t border-slate-100">
-                                <h3 className="text-indigo-600 font-black uppercase text-[10px] tracking-[0.2em] leading-none">Candidate A (Lead)</h3>
+                                <h3 className="text-indigo-600 font-black uppercase text-[10px] tracking-[0.2em] leading-none">
+                                    {regType === 'solo' ? 'Participant Info' : 'Candidate A (Lead)'}
+                                </h3>
                                 <div className="grid grid-cols-1 gap-4">
                                     <div className="relative group">
                                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
@@ -180,47 +205,49 @@ const Registration = () => {
                             </div>
 
                             {/* Candidate B */}
-                            <div className="space-y-4 pt-4 border-t border-slate-100">
-                                <h3 className="text-indigo-600 font-black uppercase text-[10px] tracking-[0.2em] leading-none">Candidate B</h3>
-                                <div className="grid grid-cols-1 gap-4">
-                                    <div className="relative group">
-                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
-                                        <input 
-                                            required
-                                            type="text"
-                                            placeholder="Full Name"
-                                            value={formData.candidateB.name}
-                                            onChange={(e) => handleInputChange('name', e.target.value, 'B')}
-                                            className="w-full bg-white border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm font-medium"
-                                        />
-                                    </div>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {regType === 'team' && (
+                                <div className="space-y-4 pt-4 border-t border-slate-100">
+                                    <h3 className="text-indigo-600 font-black uppercase text-[10px] tracking-[0.2em] leading-none">Candidate B</h3>
+                                    <div className="grid grid-cols-1 gap-4">
                                         <div className="relative group">
-                                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
                                             <input 
-                                                required
-                                                type="email"
-                                                placeholder="Email ID"
-                                                value={formData.candidateB.email}
-                                                onChange={(e) => handleInputChange('email', e.target.value, 'B')}
-                                                className="w-full bg-white border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm text-sm font-medium"
+                                                required={regType === 'team'}
+                                                type="text"
+                                                placeholder="Full Name"
+                                                value={formData.candidateB.name}
+                                                onChange={(e) => handleInputChange('name', e.target.value, 'B')}
+                                                className="w-full bg-white border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm font-medium"
                                             />
                                         </div>
-                                        <div className="relative group">
-                                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
-                                            <input 
-                                                required
-                                                type="tel"
-                                                placeholder="Phone Number"
-                                                value={formData.candidateB.phone}
-                                                onChange={(e) => handleInputChange('phone', e.target.value, 'B')}
-                                                className="w-full bg-white border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm text-sm font-medium"
-                                            />
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div className="relative group">
+                                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                                <input 
+                                                    required={regType === 'team'}
+                                                    type="email"
+                                                    placeholder="Email ID"
+                                                    value={formData.candidateB.email}
+                                                    onChange={(e) => handleInputChange('email', e.target.value, 'B')}
+                                                    className="w-full bg-white border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm text-sm font-medium"
+                                                />
+                                            </div>
+                                            <div className="relative group">
+                                                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                                <input 
+                                                    required={regType === 'team'}
+                                                    type="tel"
+                                                    placeholder="Phone Number"
+                                                    value={formData.candidateB.phone}
+                                                    onChange={(e) => handleInputChange('phone', e.target.value, 'B')}
+                                                    className="w-full bg-white border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm text-sm font-medium"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            )}
+                        </div>
                     </motion.div>
 
                     {/* Payment Side */}
@@ -230,9 +257,14 @@ const Registration = () => {
                         className="lg:pt-12"
                     >
                         <div className="bg-white border border-slate-200 rounded-3xl p-8 sticky top-12 shadow-2xl shadow-slate-200/50">
-                            <h3 className="text-slate-900 font-bold mb-6 flex items-center gap-2">
-                                <QrCode className="w-5 h-5 text-indigo-600" />
-                                Payment Verification
+                            <h3 className="text-slate-900 font-bold mb-6 flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <QrCode className="w-5 h-5 text-indigo-600" />
+                                    Payment Details
+                                </div>
+                                <span className="text-sm font-black text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-widest">
+                                    ₹{regType === 'solo' ? '100' : '200'}
+                                </span>
                             </h3>
                             
                             <div className="aspect-square bg-slate-50 rounded-2xl mb-8 overflow-hidden relative border border-slate-100 flex items-center justify-center p-4">
@@ -264,7 +296,7 @@ const Registration = () => {
                                 </div>
 
                                 <button 
-                                    onClick={handleSubmit}
+                                    type="submit"
                                     className="w-full h-16 bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase tracking-widest rounded-2xl transition-all shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-3 active:scale-95"
                                 >
                                     Complete Registration
@@ -277,7 +309,7 @@ const Registration = () => {
                             </div>
                         </div>
                     </motion.div>
-                </div>
+                </form>
             </div>
         </div>
     );
