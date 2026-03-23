@@ -135,9 +135,6 @@ const Nav = () => {
               <span className="text-2xl font-black text-slate-900 tracking-tighter leading-none italic uppercase">
                 DESIGN<span className="text-indigo-600">XPO</span>
               </span>
-              <span className="text-[10px] font-black tracking-[0.2em] text-slate-400 mt-0.5 ml-0.5">
-                BY DESIGN CLUB
-              </span>
             </div>
           </Link>
 
@@ -255,7 +252,7 @@ const Nav = () => {
                 <button 
                   onClick={() => {
                     setIsMenuOpen(false);
-                    document.getElementById('details')?.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                   className="px-6 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/10"
                 >
