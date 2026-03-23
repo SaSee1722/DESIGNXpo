@@ -26,8 +26,8 @@ const Details = () => (
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {[
-            { name: 'VIDHARSHANA SREE R', dept: 'II CSE B', image: '/vidharshana_profile.jpg' },
-            { name: 'MUTHUSELVAN SP', dept: 'II CSE B', image: '/muthuselvan_profile.jpg' }
+            { name: 'MUTHUSELVAN SP', dept: 'II CSE B', image: '/muthuselvan_profile.jpg' },
+            { name: 'VIDHARSHANA SREE R', dept: 'II CSE B', image: '/vidharshana_profile.jpg' }
           ].map((item, i) => (
             <motion.div 
               key={i} 
@@ -39,14 +39,15 @@ const Details = () => (
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-4 border-slate-100 bg-white shadow-sm z-10" />
               <div className="absolute top-4 left-1/2 -translate-x-1/2 w-0.5 h-6 bg-slate-100" />
 
-              <div className="h-full flex flex-col items-center gap-6 p-8 glass rounded-[2.5rem] border border-white/60 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] transition-all duration-500 text-center">
-                <div className="w-28 h-28 rounded-3xl overflow-hidden border-4 border-white shadow-xl flex-shrink-0 relative group-hover:scale-105 transition-transform duration-500">
+              <div className="h-full flex flex-col items-center gap-8 p-10 glass rounded-[3rem] border border-white/60 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] hover:shadow-[0_40px_80px_-20px_rgba(79,70,229,0.1)] transition-all duration-700 text-center">
+                <div className="w-32 h-32 rounded-[2rem] overflow-hidden border-4 border-white shadow-2xl flex-shrink-0 relative group-hover:scale-110 transition-transform duration-700 ease-out">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover" loading="lazy" />
+                  <div className="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 </div>
                 <div>
-                  <h4 className="font-black text-slate-900 text-lg mb-1 tracking-tight leading-tight">{item.name}</h4>
-                  <p className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em] mb-4">{item.dept}</p>
-                  <p className="text-[9px] text-indigo-600 font-black uppercase tracking-[0.2em] py-1.5 px-4 bg-indigo-50/50 rounded-full inline-block border border-indigo-100">Co-ordinator</p>
+                  <h4 className="font-black text-slate-900 text-xl mb-1.5 tracking-tight leading-tight">{item.name}</h4>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.25em] mb-5">{item.dept}</p>
+                  <p className="text-[10px] text-indigo-600 font-extrabold uppercase tracking-[0.2em] py-2 px-6 bg-indigo-50/50 rounded-full inline-block border border-indigo-100 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all duration-500">Co-ordinator</p>
                 </div>
               </div>
             </motion.div>
