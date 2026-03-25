@@ -6,11 +6,11 @@ import { useNavigate } from 'react-router-dom';
 
 interface Participant {
   id: number;
-  team_name: string;
-  department: string;
-  candidate_a: { name: string; email: string; phone: string };
-  candidate_b: { name: string; email: string; phone: string };
-  transaction_id: string;
+  team_name?: string;
+  department?: string;
+  candidate_a?: { name: string; email: string; phone: string };
+  candidate_b?: { name: string; email: string; phone: string };
+  transaction_id?: string;
   created_at: string;
 }
 
@@ -103,11 +103,18 @@ const Admin = () => {
         }
     };
 
-    const filteredParticipants = participants.filter(p =>
-        p.team_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.candidate_a.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.candidate_b.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredParticipants = participants.filter(p => {
+        const search = searchTerm.toLowerCase();
+        const teamName = p.team_name?.toLowerCase() || '';
+        const candidateAName = p.candidate_a?.name?.toLowerCase() || '';
+        const candidateBName = p.candidate_b?.name?.toLowerCase() || '';
+        const transId = p.transaction_id?.toLowerCase() || '';
+        
+        return teamName.includes(search) || 
+               candidateAName.includes(search) || 
+               candidateBName.includes(search) ||
+               transId.includes(search);
+    });
 
     if (!isAuthenticated) {
         return (
@@ -238,14 +245,14 @@ const Admin = () => {
                                                     <span className="absolute -top-3 right-6 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">Lead Designer</span>
                                                     <div className="flex items-center gap-4 mb-3">
                                                         <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-black text-xs">A</div>
-                                                        <span className="font-black text-slate-900 text-lg tracking-tight">{p.candidate_a.name}</span>
+                                                        <span className="font-black text-slate-900 text-lg tracking-tight">{p.candidate_a?.name}</span>
                                                     </div>
                                                     <div className="space-y-2 ml-12">
                                                         <div className="flex items-center gap-2 text-slate-500 text-xs font-bold">
-                                                            <Mail className="w-3.5 h-3.5" /> {p.candidate_a.email}
+                                                            <Mail className="w-3.5 h-3.5" /> {p.candidate_a?.email}
                                                         </div>
                                                         <div className="flex items-center gap-2 text-slate-400 text-xs font-bold">
-                                                            <Phone className="w-3.5 h-3.5" /> {p.candidate_a.phone}
+                                                            <Phone className="w-3.5 h-3.5" /> {p.candidate_a?.phone}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,14 +261,14 @@ const Admin = () => {
                                                 <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 relative group/card hover:bg-white hover:shadow-lg transition-all duration-300">
                                                     <div className="flex items-center gap-4 mb-3">
                                                         <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-black text-xs">B</div>
-                                                        <span className="font-black text-slate-900 text-lg tracking-tight">{p.candidate_b.name}</span>
+                                                        <span className="font-black text-slate-900 text-lg tracking-tight">{p.candidate_b?.name}</span>
                                                     </div>
                                                     <div className="space-y-2 ml-12">
                                                         <div className="flex items-center gap-2 text-slate-500 text-xs font-bold">
-                                                            <Mail className="w-3.5 h-3.5" /> {p.candidate_b.email}
+                                                            <Mail className="w-3.5 h-3.5" /> {p.candidate_b?.email}
                                                         </div>
                                                         <div className="flex items-center gap-2 text-slate-400 text-xs font-bold">
-                                                            <Phone className="w-3.5 h-3.5" /> {p.candidate_b.phone}
+                                                            <Phone className="w-3.5 h-3.5" /> {p.candidate_b?.phone}
                                                         </div>
                                                     </div>
                                                 </div>
