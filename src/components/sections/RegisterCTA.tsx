@@ -6,6 +6,10 @@ import { useNavigate } from 'react-router-dom';
 const RegisterCTA = () => {
     const navigate = useNavigate();
 
+    // Check if registration is closed
+    const REGISTRATION_DEADLINE = new Date('2026-03-26T17:00:00');
+    const isRegistrationClosed = new Date() > REGISTRATION_DEADLINE;
+
     return (
         <section id="register" className="py-24 px-6 relative overflow-hidden bg-white/50">
             {/* Visual ascent particles — CSS only, no React re-renders */}
@@ -47,16 +51,21 @@ const RegisterCTA = () => {
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-8 relative">
                         <button 
-                            onClick={() => navigate('/register')}
-                            className="group relative px-16 py-8 bg-slate-900 text-white rounded-[2.5rem] font-black text-2xl hover:bg-slate-800 hover:scale-105 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 shadow-[0_40px_80px_-20px_rgba(15,23,42,0.3)] flex items-center gap-4 overflow-hidden"
+                            onClick={() => !isRegistrationClosed && navigate('/register')}
+                            disabled={isRegistrationClosed}
+                            className={`group relative px-16 py-8 ${isRegistrationClosed ? 'bg-slate-100 cursor-not-allowed text-slate-400' : 'bg-slate-900 text-white hover:bg-slate-800 hover:scale-105 hover:-translate-y-1 active:scale-[0.98]'} rounded-[2.5rem] font-black text-2xl transition-all duration-300 shadow-[0_40px_80px_-20px_rgba(15,23,42,0.3)] flex items-center gap-4 overflow-hidden`}
                         >
-                            <span className="relative z-10 flex items-center gap-4">
-                                REGISTER NOW
-                                <Send className="w-6 h-6 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />
+                            <span className="relative z-10 flex items-center gap-4 uppercase italic">
+                                {isRegistrationClosed ? 'REGISTRATION CLOSED' : 'REGISTER NOW'}
+                                {!isRegistrationClosed && <Send className="w-6 h-6 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />}
                             </span>
-                            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-400 via-indigo-600 to-indigo-400 opacity-0 group-hover:opacity-20 transition-opacity duration-700" />
-                            {/* Reflection effect */}
-                            <div className="absolute top-[-100%] left-[-100%] w-[50%] h-[300%] bg-white/10 rotate-[35deg] group-hover:left-[150%] transition-all duration-[1500ms]" />
+                            {!isRegistrationClosed && (
+                                <>
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-indigo-400 via-indigo-600 to-indigo-400 opacity-0 group-hover:opacity-20 transition-opacity duration-700" />
+                                    {/* Reflection effect */}
+                                    <div className="absolute top-[-100%] left-[-100%] w-[50%] h-[300%] bg-white/10 rotate-[35deg] group-hover:left-[150%] transition-all duration-[1500ms]" />
+                                </>
+                            )}
                         </button>
                         
                         <div className="absolute -top-12 -right-12 hidden lg:block opacity-40">

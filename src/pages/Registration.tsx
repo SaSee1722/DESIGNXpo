@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Send, CheckCircle2, QrCode, Phone, Mail, User, Users, Building, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Send, CheckCircle2, QrCode, Phone, Mail, User, Users, Building, ExternalLink, X, Instagram, Twitter } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 const Registration = () => {
     const navigate = useNavigate();
     const [isSubmitted, setIsSubmitted] = useState(false);
+    
+    // Check if registration is closed
+    const REGISTRATION_DEADLINE = new Date('2026-03-26T17:00:00'); // Deadline: March 26, 2026, 5:00 PM
+    const isRegistrationClosed = new Date() > REGISTRATION_DEADLINE;
+
     const [regType, setRegType] = useState<'solo' | 'team'>('team');
     const [formData, setFormData] = useState({
         teamName: '',
@@ -52,6 +57,40 @@ const Registration = () => {
             setFormData(prev => ({ ...prev, [field]: value }));
         }
     };
+
+    if (isRegistrationClosed && !isSubmitted) {
+        return (
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 font-inter">
+                <motion.div 
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="max-w-md w-full bg-white border border-slate-200 rounded-3xl p-8 text-center shadow-2xl shadow-slate-200/50"
+                >
+                    <div className="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <X className="w-10 h-10 text-rose-500" />
+                    </div>
+                    <h2 className="text-3xl font-black text-slate-900 mb-4 tracking-tight uppercase italic">Registration Closed</h2>
+                    <p className="text-slate-500 mb-8 leading-relaxed">
+                        The registration period for DesignXpo 1.0 has ended. Thank you for your interest! Keep following us for more updates.
+                    </p>
+                    <button 
+                        onClick={() => navigate('/')}
+                        className="w-full py-4 bg-slate-900 hover:bg-slate-800 text-white font-black uppercase tracking-widest rounded-2xl transition-all shadow-lg"
+                    >
+                        Return to Home
+                    </button>
+                    <div className="mt-8 flex gap-4 justify-center">
+                        <a href="https://instagram.com/your-insta" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram" className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 transition-colors">
+                            <Instagram size={20} />
+                        </a>
+                        <a href="https://twitter.com/your-twitter" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Twitter" className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 transition-colors">
+                            <Twitter size={20} />
+                        </a>
+                    </div>
+                </motion.div>
+            </div>
+        );
+    }
 
     if (isSubmitted) {
         return (
